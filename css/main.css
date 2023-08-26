@@ -1,0 +1,11 @@
+#main {
+	list-style: none;
+	padding: 0;
+}
+
+.favicon {
+	height: 15px;
+	margin-right: 5px;
+	vertical-align: middle;
+	width: 15px;
+}
