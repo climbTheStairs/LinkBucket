@@ -1,7 +1,7 @@
 1. ~~`popup.html`~~
 2. ~~modules~~
 3. dependency management
-4. Git
+4. ~~Git~~
 5. `README.md`
 6. `config.html`
 7. changing and deleting of links
