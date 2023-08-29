@@ -4,7 +4,7 @@
 3. dependency management
 4. ~~Git~~
 5. `README.md`
-6. `config.html`
+6. ~~`options.html`~~
 7. changing and deleting of links
 8. import and export all data
 9. filtering by tag

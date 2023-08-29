@@ -30,6 +30,10 @@
 		"default_panel": "/html/bucket.html",
 		"browser_style": false
 	},
+	"options_ui": {
+		"page": "/html/options.html",
+		"browser_style": false
+	},
 	"commands": {
 		"_execute_browser_action": {
 			"description": "Save current tab (with popup)"
