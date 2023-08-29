@@ -1,6 +1,5 @@
 import {
-	C, R, T,
-	QUERY_TAB_CURR, QUERY_WIN_CURR,
+	C, R, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
 	getTags, tab2link, saveLinks,
 } from "/js/main.js"
 

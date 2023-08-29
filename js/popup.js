@@ -1,17 +1,13 @@
 import { $, onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
 import {
-	S, T,
-	DEFAULT_CONFIG, QUERY_TAB_CURR,
-	saveLinks, tab2link
+	S, T, QUERY_TAB_CURR,
+	getConfig, saveLinks, tab2link
 } from "/js/main.js"
 
-const config = {
-	...DEFAULT_CONFIG,
-	...(await S.get("config")).config,
-}
 const [tabCurr] = await T.query(QUERY_TAB_CURR)
 
 const popup_load = () => {
+	const config = await getConfig()
 	const [$form] = document.forms
 	$form.title.value = tabCurr.title
 	$form.url.value = tabCurr.url

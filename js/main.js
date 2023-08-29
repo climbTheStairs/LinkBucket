@@ -1,7 +1,6 @@
 export {
-	C, R, S, T,
-	DEFAULT_CONFIG, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	getTags, tab2link, saveLinks,
+	C, R, S, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
+	getConfig, setConfig, getTags, tab2link, saveLinks,
 }
 
 const {
@@ -14,6 +13,15 @@ const {
 const DEFAULT_CONFIG = { popup_close: true }
 const QUERY_TAB_CURR = { active: true, currentWindow: true }
 const QUERY_WIN_CURR = { currentWindow: true, pinned: false }
+
+const getConfig = async () => {
+	return Object.assign({}, DEFAULT_CONFIG, await S.get({ config: {} }))
+}
+const setConfig = async (key, val) => {
+	const config = await getConfig()
+	config[key] = val ?? DEFAULT_CONFIG[key]
+	S.set({ config })
+}
 
 const getTags = async () => {
 	const code = `window.prompt("Enter tags:")`
