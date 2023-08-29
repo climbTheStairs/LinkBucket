@@ -1,3 +1,4 @@
+0. run `find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} + 2> /dev/null`
 1. ~~`popup.html`~~
 2. ~~modules~~
 3. dependency management
