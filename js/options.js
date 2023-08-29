@@ -12,8 +12,9 @@ const options_load = async () => {
 const options_submit = async function(e) {
 	e.preventDefault() // `return false` does not work with `async`
 	const [$form] = document.forms
-	const config = Object.fromEntries(
-		[...$form].map($in => [$in.name, $in.checked]))
+	const config = Object.fromEntries([...$form]
+		.filter($in => $in.name)
+		.map($in => [$in.name, $in.checked]))
 	await S.set({ config })
 }
 
