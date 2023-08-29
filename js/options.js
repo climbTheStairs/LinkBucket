@@ -15,7 +15,6 @@ const options_submit = async function(e) {
 	const config = Object.fromEntries(
 		[...$form].map($in => [$in.name, $in.checked]))
 	await S.set({ config })
-	window.close()
 }
 
 onOrIfDomContentLoaded(options_load)
