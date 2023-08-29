@@ -1,6 +1,6 @@
 import {
 	C, R, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	getTags, tab2link, saveLinks,
+	getTags, saveLinks, tab2link,
 } from "/js/main.js"
 
 const cmds = {

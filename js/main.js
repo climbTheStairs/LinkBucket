@@ -1,6 +1,6 @@
 export {
 	C, R, S, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	getConfig, setConfig, getTags, tab2link, saveLinks,
+	getConfig, getTags, saveLinks, tab2link,
 }
 
 const {
