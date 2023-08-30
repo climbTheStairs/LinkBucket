@@ -26,18 +26,21 @@ const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
 	})
 	const $change = $create("button", {
 		textContent: "c",
-		onclick: promptChangeLink,
+		onclick: function() {
+			promptChangeLink(this.closest("li"))
+		},
 	})
 	const $delete = $create("button", {
 		textContent: "d",
-		onclick: deleteLink,
+		onclick: function() {
+			deleteLink(this.closest("li"))
+		},
 	})
 	$li.append($icon, $a, $change, $delete)
 	return $li
 }
 
-const promptChangeLink = async function() {
-	const $li = this.closest("li")
+const promptChangeLink = function($li) {
 	const { idx } = $li.dataset
 	$form.title.value = bucket[idx].title
 	$form.url.value   = bucket[idx].url
@@ -70,8 +73,7 @@ const changeLink = async function($li) {
 	}
 }
 
-const deleteLink = async function() {
-	const $li = this.closest("li")
+const deleteLink = async function($li) {
 	const { idx } = $li.dataset
 	// Removing bucket[idx] would mess up indices of later elements
 	bucket[idx] = null
@@ -120,13 +122,13 @@ const keyboardNav = (e) => {
 		// `setTimeout` with 1ms prevents "c"
 		// from being inserted into the opened `<input>`.
 		// TODO: Is there a better way to do this?
-		setTimeout(promptChangeLink.bind($hi), 1)
+		setTimeout(() => promptChangeLink($hi), 1)
 		return
 
 	case "d":
 		if (!$hi)
 			return
-		deleteLink.bind($hi)()
+		deleteLink($hi)
 		;($hi.nextElementSibling || $hi.previousElementSibling)
 			?.classList.add("highlighted")
 		return
