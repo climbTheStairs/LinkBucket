@@ -6,7 +6,7 @@ import {
 
 const [tabCurr] = await T.query(QUERY_TAB_CURR)
 
-const popup_load = () => {
+const popup_load = async () => {
 	const config = await getConfig()
 	const [$form] = document.forms
 	$form.title.value = tabCurr.title
