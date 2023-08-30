@@ -26,7 +26,7 @@ const popup_submit = async function(e) {
 	const tags = this.tags.value.split(",").map(x => x.trim())
 	const ts = this.ts.value
 	if (isNaN(new Date(ts))) {
-		return // TODO: display error
+		return // TODO: error handling
 	}
 	await saveLinks(tab2link(tab, tags, ts))
 	if (this.close.checked)
