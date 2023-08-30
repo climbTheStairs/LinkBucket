@@ -55,16 +55,14 @@ update_ck() (
 
 	debug 'comparing unzipped files with lib/, applying changes, and printing changed files'
 	for f do
-		if ! cmp -s "../lib/$repo_name/$f" "$zip_root/$f" 2> /dev/null; then
-			mkdir -p "$(dirname "../lib/$repo_name/$f")"
-			mv -f -- "$zip_root/$f" "../lib/$repo_name/$f"
-			printf '%s\n' "$repo_name/$f"
-		else
-			rm -- "$zip_root/$f"
-		fi
+		cmp -s "../lib/$repo_name/$f" "$zip_root/$f" 2> /dev/null &&
+			continue
+		mkdir -p "$(dirname "../lib/$repo_name/$f")"
+		mv -f -- "$zip_root/$f" "../lib/$repo_name/$f"
+		printf '%s\n' "$repo_name/$f"
 	done
 
-	find "$zip_root" -type d -exec rmdir -p {} + 2> /dev/null || true
+	rm -r -- "$zip_root"
 )
 
 # prepend <substr> <args...>
