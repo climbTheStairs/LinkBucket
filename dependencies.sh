@@ -4,8 +4,7 @@
 # - curl
 # - unzip
 
-# TODO:
-# - better documentation
+# TODO: better documentation
 
 # shellcheck disable=SC2086
 # Hopefully they fix this soon
@@ -54,16 +53,14 @@ update_ck() (
 		err 'failed to extract files from downloaded repo'
 	rm -- "$file_zip"
 
-	debug 'comparing unzipped files with lib/ and printing changed files'
+	debug 'comparing unzipped files with lib/, applying changes, and printing changed files'
 	for f do
-		if [ ! -e "../lib/$repo_name/$f" ]; then
+		if ! cmp -s "../lib/$repo_name/$f" "$zip_root/$f" 2> /dev/null; then
 			mkdir -p "$(dirname "../lib/$repo_name/$f")"
-			mv -- "$zip_root/$f" "../lib/$repo_name/$f"
-			printf 'i\t%s\n' "$repo_name/$f"
-		elif cmp -s "../lib/$repo_name/$f" "$zip_root/$f"; then
-			rm -- "$zip_root/$f"
+			mv -f -- "$zip_root/$f" "../lib/$repo_name/$f"
+			printf '%s\n' "$repo_name/$f"
 		else
-			printf 'u\t%s\n' "$repo_name/$f"
+			rm -- "$zip_root/$f"
 		fi
 	done
 
