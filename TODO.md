@@ -17,3 +17,4 @@
 16. optional audio notifications (?)
 17. reordering links (?)
 18. search suggestions (?)
+19. mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`)
