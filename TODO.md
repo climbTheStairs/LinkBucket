@@ -1,4 +1,4 @@
-- run `find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} + 2> /dev/null`
+- run `find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} +`
 - ~~`popup.html`~~
 - ~~modules~~
 - dependency management
