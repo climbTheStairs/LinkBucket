@@ -29,9 +29,8 @@ const getTags = async () => {
 	return tags.split(",").map(x => x.trim())
 }
 
-const tab2link = (tab, tags, ts) => {
+const tab2link = (tab, tags, ts = new Date().toISOString()) => {
 	const { title, url, favIconUrl } = tab
-	ts ??= new Date().toISOString()
 	return { title, url, tags, ts, favIconUrl }
 }
 
