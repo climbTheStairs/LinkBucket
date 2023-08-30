@@ -59,7 +59,9 @@ const changeLink = async function($li) {
 	// regardless of whether storage is successfully updated
 	// so that the user does not lose their changes if it is not.
 	// This is different from `deleteLink()`.
-	$li.after(link2html(bucket[idx], idx))
+	const $nli = link2html(bucket[idx], idx)
+	$nli.classList.add(...$li.classList)
+	$li.after($nli)
 	$li.remove()
 	try {
 		await S.set({ bucket: bucket.filter(x => x) })
@@ -85,7 +87,58 @@ const deleteLink = async function() {
 	$li.remove()
 }
 
+const keyboardNav = (e) => {
+	if (e.key === "Escape")
+		return document.activeElement.blur()
+	if (![document.body, null].includes(document.activeElement))
+		return
+
+	const $hi = $(".highlighted")
+
+	switch (e.key) {
+	case "j":
+		if (!$hi)
+			return $("ul > li:first-child").classList.add("highlighted")
+		if (!$hi.nextElementSibling)
+			return
+		$hi.classList.remove("highlighted")
+		$hi.nextElementSibling.classList.add("highlighted")
+		return
+
+	case "k":
+		if (!$hi)
+			return $("ul > li:last-child").classList.add("highlighted")
+		if (!$hi.previousElementSibling)
+			return
+		$hi.classList.remove("highlighted")
+		$hi.previousElementSibling.classList.add("highlighted")
+		return
+
+	case "c":
+		if (!$hi)
+			return
+		// `setTimeout` with 1ms prevents "c"
+		// from being inserted into the opened `<input>`.
+		// TODO: Is there a better way to do this?
+		setTimeout(promptChangeLink.bind($hi), 1)
+		return
+
+	case "d":
+		if (!$hi)
+			return
+		deleteLink.bind($hi)()
+		;($hi.nextElementSibling || $hi.previousElementSibling)
+			?.classList.add("highlighted")
+		return
+
+	case "Enter":
+		$hi?.$("a").click()
+		return
+	}
+}
+
 const bucket_load = () => {
+	document.onkeydown = keyboardNav
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
 	$("ul").append(...bucket.map(link2html))
 }
