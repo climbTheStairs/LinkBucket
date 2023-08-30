@@ -1,13 +1,15 @@
 - run `find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} +`
 - ~~`popup.html`~~
 - ~~modules~~
-- dependency management
+- ~~dependency management~~
 - ~~Git~~
-- `README.md`
+- error handling
+- documentation (`README.md`, doc comments)
 - ~~`config.html`~~
 - ~~changing and deleting of links~~
 - import and export all data
 - filtering by tag
+- refresh `bucket.html` on storage change
 - Manifest V3 compatibility
 - sync to server
 - UI
@@ -16,5 +18,6 @@
 - icon
 - optional audio notifications (?)
 - reordering links (?)
-- search suggestions (?)
+- browser search suggestions (?)
+- keyboard controls
 - mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`)
