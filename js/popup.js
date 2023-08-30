@@ -13,7 +13,7 @@ const popup_load = async () => {
 	$form.url.value = tabCurr.url
 	$form.ts.value = new Date().toISOString()
 	$form.close.checked = config.popup_close
-	$form.addEventListener("submit", popup_submit)
+	$form.onsubmit = popup_submit
 }
 
 const popup_submit = async function(e) {

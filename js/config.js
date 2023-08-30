@@ -6,7 +6,7 @@ const config_load = async () => {
 	const [$form] = document.forms
 	;[...$form].filter($in => $in.name)
 		.forEach($in => $in.checked = config[$in.name])
-	$form.addEventListener("submit", config_submit)
+	$form.onsubmit = config_submit
 }
 
 const config_submit = async function(e) {
