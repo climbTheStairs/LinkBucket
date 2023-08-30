@@ -10,6 +10,39 @@ const { bucket } = await S.get({ bucket: [] })
 
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
+const $search = $("#search")
+const $bucket = $("#main")
+
+const BOOL_OPS = {
+	"_implicit": (x, y) => y && x,
+	"!": (x) => !x,
+	"&": (x, y) => y && x,
+	"|": (x, y) => y || x,
+}
+const ops = BOOL_OPS
+
+const filt = (q) => {
+	q = q.toLowerCase().split(" ").filter(x => x)
+	for (const $li of $bucket.children) {
+		const { idx } = $li.dataset
+		$li.classList.toggle("hidden",
+			!evalRpn(q, [].includes.bind(bucket[idx].tags)))
+	}
+}
+
+const evalRpn = (rpn, f = x => x) => {
+	if (rpn.length == 0)
+		return true
+	const stk = []
+	for (const t of rpn)
+		if (Object.hasOwn(ops, t))
+			stk.push(ops[t](
+				...[...Array(ops[t].length)]
+					.map(() => stk.pop())))
+		else
+			stk.push(f(t))
+	return stk.reduce(ops._implicit)
+}
 
 const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
 	const $li = $create("li", {
@@ -89,6 +122,19 @@ const deleteLink = async function($li) {
 	$li.remove()
 }
 
+const $nextVisible = ($el) => {
+	do
+		$el = $el.nextElementSibling
+	while ($el && $el.classList.contains("hidden"))
+	return $el
+}
+const $prevVisible = ($el) => {
+	do
+		$el = $el.previousElementSibling
+	while ($el && $el.classList.contains("hidden"))
+	return $el
+}
+
 const keyboardNav = (e) => {
 	if (e.key === "Escape")
 		return document.activeElement.blur()
@@ -100,20 +146,20 @@ const keyboardNav = (e) => {
 	switch (e.key) {
 	case "j":
 		if (!$hi)
-			return $("ul > li:first-child").classList.add("highlighted")
-		if (!$hi.nextElementSibling)
+			return $bucket.$(":first-child").classList.add("highlighted")
+		if (!$nextVisible($hi))
 			return
 		$hi.classList.remove("highlighted")
-		$hi.nextElementSibling.classList.add("highlighted")
+		$nextVisible($hi).classList.add("highlighted")
 		return
 
 	case "k":
 		if (!$hi)
-			return $("ul > li:last-child").classList.add("highlighted")
-		if (!$hi.previousElementSibling)
+			return $bucket.$(":last-child").classList.add("highlighted")
+		if (!$prevVisible($hi))
 			return
 		$hi.classList.remove("highlighted")
-		$hi.previousElementSibling.classList.add("highlighted")
+		$prevVisible($hi).classList.add("highlighted")
 		return
 
 	case "c":
@@ -129,7 +175,7 @@ const keyboardNav = (e) => {
 		if (!$hi)
 			return
 		deleteLink($hi)
-		;($hi.nextElementSibling || $hi.previousElementSibling)
+		;($nextVisible($hi) || $prevVisible($hi))
 			?.classList.add("highlighted")
 		return
 
@@ -141,8 +187,12 @@ const keyboardNav = (e) => {
 
 const bucket_load = () => {
 	document.onkeydown = keyboardNav
+	$search.onkeydown = (e) => {
+		if (e.key === "Enter")
+			filt($search.value)
+	}
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
-	$("ul").append(...bucket.map(link2html))
+	$bucket.append(...bucket.map(link2html))
 }
 
 onOrIfDomContentLoaded(bucket_load)
