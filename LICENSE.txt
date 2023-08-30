@@ -1,6 +1,6 @@
 BSD 2-Clause License
 
-Copyright (c) <year> <owner>
+Copyright (c) 2023 Wren <yxtqwf+github@gmail.com>
 
 Redistribution and use in source and binary forms,
 with or without modification,
