@@ -6,6 +6,24 @@
 	<link rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
+	<dialog>
+		<form method="dialog">
+			<label for="in-title">Title: </label>
+			<input type="text" name="title" id="in-title" />
+			<br />
+			<label for="in-url">URL: </label>
+			<input type="text" name="url" id="in-url" />
+			<br />
+			<label for="in-tags">Tags: </label>
+			<input type="text" name="tags" id="in-tags" />
+			<br />
+			<label for="in-ts">Timestamp: </label>
+			<input type="text" name="ts" id="in-ts" />
+			<br />
+			<button type="button">Cancel</button>
+			<button type="submit">Save</button>
+		</form>
+	</dialog>
 	<ul id="main"></ul>
 	<script src="/lib/site/js/stairz.js" type="module"></script>
 	<script src="/js/main.js" type="module"></script>

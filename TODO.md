@@ -5,7 +5,7 @@
 - ~~Git~~
 - `README.md`
 - ~~`config.html`~~
-- changing and deleting of links
+- ~~changing and deleting of links~~
 - import and export all data
 - filtering by tag
 - Manifest V3 compatibility
