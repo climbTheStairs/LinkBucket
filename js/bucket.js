@@ -14,7 +14,7 @@ const { bucket } = await S.get({ bucket: {} })
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
 const $search = $("#search")
-const $bucket = $("#main")
+const $bucket = $("#bucket")
 
 const and = (x, y) => y && x
 const or  = (x, y) => y || x
