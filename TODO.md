@@ -7,8 +7,9 @@
 - documentation (`README.md`, doc comments)
 - ~~`config.html`~~
 - ~~changing and deleting of links~~
+- don't store duplicate favicons
 - import and export all data
-- filtering by tag
+- ~~filtering by tag~~
 - refresh `bucket.html` on storage change
 - Manifest V3 compatibility
 - sync to server
@@ -19,5 +20,5 @@
 - optional audio notifications (?)
 - reordering links (?)
 - browser search suggestions (?)
-- keyboard controls
+- ~~keyboard controls~~
 - mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`)
