@@ -30,8 +30,8 @@ const getTags = async () => {
 }
 
 const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
-	const { bucket } = await S.get({ bucket: [] })
+	let { bucket, maxId } = await S.get({ bucket: {}, maxId: 0 })
 	for (const { title, url, favIconUrl } of tabs)
-		bucket.push({ title, url, tags, ts, favIconUrl })
-	await S.set({ bucket })
+		bucket[++maxId] = { id: maxId, title, url, tags, ts, favIconUrl }
+	await S.set({ bucket, maxId })
 }

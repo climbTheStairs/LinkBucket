@@ -9,7 +9,7 @@ export { promptChangeLink, deleteLink }
 
 extendProto.Element()
 
-const { bucket } = await S.get({ bucket: [] })
+const { bucket } = await S.get({ bucket: {} })
 
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
@@ -27,9 +27,9 @@ const OPS = {
 const filt = (q) => {
 	q = q.toLowerCase().split(" ").filter(x => x)
 	for (const $li of $bucket.children) {
-		const { idx } = $li.dataset
-		$li.classList.toggle("hidden",
-			!evalRpn(q, [].includes.bind(bucket[idx].tags)))
+		const id = $li.id.slice("link-".length)
+		const hasTag = [].includes.bind(bucket[id].tags)
+		$li.classList.toggle("hidden", !evalRpn(q, hasTag))
 	}
 }
 
@@ -47,9 +47,10 @@ const evalRpn = (rpn, f = x => x) => {
 	return stk.reduce(OPS._implicit)
 }
 
-const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
-	const $li = $create("li")
-	$li.dataset.idx = idx
+const link2html = ({ id, title, url, tags, ts, favIconUrl }) => {
+	const $li = $create("li", {
+		id: "link-" + id,
+	})
 	const $icon = $create("img", {
 		className: "favicon",
 		src: favIconUrl,
@@ -79,22 +80,22 @@ const updateLinkA = ($a, { title, url, tags, ts }) => {
 }
 
 const promptChangeLink = function($li) {
-	const { idx } = $li.dataset
-	$form.title.value = bucket[idx].title
-	$form.url.value   = bucket[idx].url
-	$form.tags.value  = bucket[idx].tags.join(",")
-	$form.ts.value    = bucket[idx].ts
+	const id = $li.id.slice("link-".length)
+	$form.title.value = bucket[id].title
+	$form.url.value   = bucket[id].url
+	$form.tags.value  = bucket[id].tags.join(",")
+	$form.ts.value    = bucket[id].ts
 	$form.onsubmit = () => changeLink($li)
 	$dialog.showModal()
 }
 
 const changeLink = async function($li) {
-	const { idx } = $li.dataset
-	bucket[idx].title = $form.title.value
-	bucket[idx].url   = $form.url.value
-	bucket[idx].tags  = $form.tags.value.split(",").map(x => x.trim())
-	bucket[idx].ts    = $form.ts.value
-	updateLinkA($li.$("a"), bucket[idx])
+	const id = $li.id.slice("link-".length)
+	bucket[id].title = $form.title.value
+	bucket[id].url   = $form.url.value
+	bucket[id].tags  = $form.tags.value.split(",").map(x => x.trim())
+	bucket[id].ts    = $form.ts.value
+	updateLinkA($li.$("a"), bucket[id])
 
 	// `$li` is updated in the UI
 	// regardless of whether storage is successfully updated
@@ -102,25 +103,20 @@ const changeLink = async function($li) {
 	// This is different from `deleteLink()`.
 	// TODO: Do this a different way such that consistency
 	try {
-		await S.set({ bucket: bucket.filter(x => x) })
+		await S.set({ bucket })
 	} catch (e) {
 		return // TODO: error handling
 	}
 }
 
 const deleteLink = async function($li) {
-	const { idx } = $li.dataset
-	// Removing bucket[idx] would mess up indices of later elements
-	bucket[idx] = null
+	const id = $li.id.slice("link-".length)
+	delete bucket[id]
 	try {
-		await S.set({ bucket: bucket.filter(x => x) })
+		await S.set({ bucket })
 	} catch (e) {
 		return // TODO: error handling
 	}
-	// `$li` is only removed from bucket.html
-	// if it is successfully removed from storage
-	// so that the UI accurately reflects the extension's state.
-	// This is different from `promptChangeLink()`.
 	$li.remove()
 }
 
@@ -130,5 +126,5 @@ onOrIfDomContentLoaded(() => {
 		if (e.key === "Enter")
 			filt($search.value)
 	}
-	$bucket.append(...bucket.map(link2html))
+	$bucket.append(...Object.values(bucket).map(link2html))
 })
