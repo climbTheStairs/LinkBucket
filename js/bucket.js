@@ -126,10 +126,10 @@ const deleteLink = async function($li) {
 }
 
 onOrIfDomContentLoaded(() => {
+	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
 	$search.onkeydown = (e) => {
 		if (e.key === "Enter")
 			filt($search.value)
 	}
-	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
 	$bucket.append(...bucket.map(link2html))
 })
