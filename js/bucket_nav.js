@@ -28,7 +28,7 @@ const keyboardNav = (e) => {
 	switch (e.key) {
 	case "j":
 		if (!$hi)
-			return $bucket.$(":first-child").classList.add("highlighted")
+			return $bucket.children[0].classList.add("highlighted")
 		if (!$nextVisible($hi))
 			return
 		$hi.classList.remove("highlighted")
@@ -37,7 +37,8 @@ const keyboardNav = (e) => {
 
 	case "k":
 		if (!$hi)
-			return $bucket.$(":last-child").classList.add("highlighted")
+			return $bucket.children[$bucket.children.length-1]
+				.classList.add("highlighted")
 		if (!$prevVisible($hi))
 			return
 		$hi.classList.remove("highlighted")
