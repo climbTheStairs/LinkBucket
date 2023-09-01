@@ -16,12 +16,13 @@ const $form = $dialog.$("form")
 const $search = $("#search")
 const $bucket = $("#main")
 
-const ops = {
-	"!": (x) => !x,
-	"&": (x, y) => y && x,
-	"|": (x, y) => y || x,
+const and = (x, y) => y && x
+const or  = (x, y) => y || x
+const not = (x) => !x
+const OPS = {
+	and, or, not,
+	_implicit: and, "+": or, "-": not,
 }
-ops._implicit = os["&"]
 
 const filt = (q) => {
 	q = q.toLowerCase().split(" ").filter(x => x)
@@ -37,13 +38,13 @@ const evalRpn = (rpn, f = x => x) => {
 		return true
 	const stk = []
 	for (const t of rpn)
-		if (Object.hasOwn(ops, t))
-			stk.push(ops[t](
-				...[...Array(ops[t].length)]
+		if (Object.hasOwn(OPS, t))
+			stk.push(OPS[t](
+				...[...Array(OPS[t].length)]
 					.map(() => stk.pop())))
 		else
 			stk.push(f(t))
-	return stk.reduce(ops._implicit)
+	return stk.reduce(OPS._implicit)
 }
 
 const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
