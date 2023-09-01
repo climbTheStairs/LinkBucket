@@ -16,13 +16,12 @@ const $form = $dialog.$("form")
 const $search = $("#search")
 const $bucket = $("#main")
 
-const BOOL_OPS = {
-	"_implicit": (x, y) => y && x,
+const ops = {
 	"!": (x) => !x,
 	"&": (x, y) => y && x,
 	"|": (x, y) => y || x,
 }
-const ops = BOOL_OPS
+ops._implicit = os["&"]
 
 const filt = (q) => {
 	q = q.toLowerCase().split(" ").filter(x => x)
