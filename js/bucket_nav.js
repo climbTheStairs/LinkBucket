@@ -1,6 +1,5 @@
-import { $, extendProto, onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
+import { $, onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
 import { promptChangeLink, deleteLink } from "/js/bucket.js"
-extendProto.Element()
 
 const $bucket = $("#main")
 

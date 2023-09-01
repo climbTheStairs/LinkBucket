@@ -4,9 +4,10 @@ import {
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
 import { S } from "/js/main.js"
-extendProto.Element()
 
 export { promptChangeLink, deleteLink }
+
+extendProto.Element()
 
 const { bucket } = await S.get({ bucket: [] })
 
