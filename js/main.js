@@ -1,6 +1,6 @@
 export {
 	C, R, S, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	getConfig, getTags, saveLinks, tab2link,
+	getConfig, getTags, saveTabsAsLinks,
 }
 
 const {
@@ -29,13 +29,9 @@ const getTags = async () => {
 	return tags.split(",").map(x => x.trim())
 }
 
-const tab2link = (tab, tags, ts = new Date().toISOString()) => {
-	const { title, url, favIconUrl } = tab
-	return { title, url, tags, ts, favIconUrl }
-}
-
-const saveLinks = async (...links) => {
+const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
 	const { bucket } = await S.get({ bucket: [] })
-	bucket.push(...links)
+	for (const { title, url, favIconUrl } of tabs)
+		bucket.push({ title, url, tags, ts, favIconUrl })
 	await S.set({ bucket })
 }

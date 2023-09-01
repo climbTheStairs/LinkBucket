@@ -1,7 +1,7 @@
 import { onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
 import {
 	S, T, QUERY_TAB_CURR,
-	getConfig, saveLinks, tab2link
+	getConfig, saveTabsAsLinks,
 } from "/js/main.js"
 
 const [tabCurr] = await T.query(QUERY_TAB_CURR)
@@ -28,7 +28,7 @@ const popup_submit = async function(e) {
 	if (isNaN(new Date(ts))) {
 		return // TODO: error handling
 	}
-	await saveLinks(tab2link(tab, tags, ts))
+	await saveTabsAsLinks([tab], tags, ts)
 	if (this.close.checked)
 		await T.remove(tabCurr.id)
 	window.close()
