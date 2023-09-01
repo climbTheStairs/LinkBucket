@@ -74,6 +74,6 @@ prepend() (
 	done
 )
 
-test "$1" = '-s'; debug=$?
+test "$1" = '-s' || debug=1
 main || exit
 
