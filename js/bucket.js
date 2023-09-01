@@ -54,11 +54,8 @@ const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
 		className: "favicon",
 		src: favIconUrl,
 	})
-	const $a = $create("a", {
-		textContent: `${title || url} (${tags.join()})`,
-		href: url,
-		title: ts,
-	})
+	const $a = $create("a")
+	updateLinkA($a, { title, url, tags, ts })
 	const $change = $create("button", {
 		textContent: "c",
 		onclick: function() {
@@ -75,6 +72,12 @@ const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
 	return $li
 }
 
+const updateLinkA = ($a, { title, url, tags, ts }) => {
+	$a.textContent = `${title || url} (${tags.join(",")})`
+	$a.href = url
+	$a.title = ts
+}
+
 const promptChangeLink = function($li) {
 	const { idx } = $li.dataset
 	$form.title.value = bucket[idx].title
@@ -87,22 +90,17 @@ const promptChangeLink = function($li) {
 
 const changeLink = async function($li) {
 	const { idx } = $li.dataset
-
 	bucket[idx].title = $form.title.value
 	bucket[idx].url   = $form.url.value
 	bucket[idx].tags  = $form.tags.value.split(",").map(x => x.trim())
 	bucket[idx].ts    = $form.ts.value
+	updateLinkA($li.$("a"), bucket[idx])
 
 	// `$li` is updated in the UI
 	// regardless of whether storage is successfully updated
 	// so that the user does not lose their changes if it is not.
 	// This is different from `deleteLink()`.
-	// TODO: Can this be improved/DRYed?
-	const { title, url, tags, ts } = bucket[idx]
-	const $a = $li.$("a")
-	$a.textContent = `${title || url} (${tags.join()})`
-	$a.href = url
-	$a.title = ts
+	// TODO: Do this a different way such that consistency
 	try {
 		await S.set({ bucket: bucket.filter(x => x) })
 	} catch (e) {
