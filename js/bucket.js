@@ -48,9 +48,7 @@ const evalRpn = (rpn, f = x => x) => {
 }
 
 const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
-	const $li = $create("li", {
-		title: ts,
-	})
+	const $li = $create("li")
 	$li.dataset.idx = idx
 	const $icon = $create("img", {
 		className: "favicon",
@@ -59,6 +57,7 @@ const link2html = ({ title, url, tags, ts, favIconUrl }, idx) => {
 	const $a = $create("a", {
 		textContent: `${title || url} (${tags.join()})`,
 		href: url,
+		title: ts,
 	})
 	const $change = $create("button", {
 		textContent: "c",
@@ -98,10 +97,12 @@ const changeLink = async function($li) {
 	// regardless of whether storage is successfully updated
 	// so that the user does not lose their changes if it is not.
 	// This is different from `deleteLink()`.
-	const $nli = link2html(bucket[idx], idx)
-	$nli.classList.add(...$li.classList)
-	$li.after($nli)
-	$li.remove()
+	// TODO: Can this be improved/DRYed?
+	const { title, url, tags, ts } = bucket[idx]
+	const $a = $li.$("a")
+	$a.textContent = `${title || url} (${tags.join()})`
+	$a.href = url
+	$a.title = ts
 	try {
 		await S.set({ bucket: bucket.filter(x => x) })
 	} catch (e) {
