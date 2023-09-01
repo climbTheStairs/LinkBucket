@@ -6,19 +6,19 @@ import {
 
 const [tabCurr] = await T.query(QUERY_TAB_CURR)
 
-const popup_load = async () => {
+const main = async () => {
 	const config = await getConfig()
 	const [$form] = document.forms
 	$form.title.value = tabCurr.title
 	$form.url.value = tabCurr.url
 	$form.ts.value = new Date().toISOString()
 	$form.close.checked = config.popup_close
-	$form.onsubmit = popup_submit
+	$form.onsubmit = saveTab
 }
 
-const popup_submit = async function(e) {
+const saveTab = async function(e) {
 	e.preventDefault() // `return false` does not work with `async`
-	const tab = {
+	const tabEdited = {
 		title: this.title.value,
 		url: this.url.value,
 		favIconUrl: tabCurr.favIconUrl,
@@ -28,10 +28,10 @@ const popup_submit = async function(e) {
 	if (isNaN(new Date(ts))) {
 		return // TODO: error handling
 	}
-	await saveTabsAsLinks([tab], tags, ts)
+	await saveTabsAsLinks([tabEdited], tags, ts)
 	if (this.close.checked)
 		await T.remove(tabCurr.id)
 	window.close()
 }
 
-onOrIfDomContentLoaded(popup_load)
+onOrIfDomContentLoaded(main)

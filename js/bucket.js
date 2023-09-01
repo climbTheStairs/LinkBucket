@@ -24,6 +24,15 @@ const OPS = {
 	_implicit: and, "+": or, "-": not,
 }
 
+const main = () => {
+	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
+	$search.onkeydown = (e) => {
+		if (e.key === "Enter")
+			filt($search.value)
+	}
+	$bucket.append(...Object.values(bucket).map(link2html))
+}
+
 const filt = (q) => {
 	q = q.toLowerCase().split(" ").filter(x => x)
 	for (const $li of $bucket.children) {
@@ -120,11 +129,4 @@ const deleteLink = async function($li) {
 	$li.remove()
 }
 
-onOrIfDomContentLoaded(() => {
-	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
-	$search.onkeydown = (e) => {
-		if (e.key === "Enter")
-			filt($search.value)
-	}
-	$bucket.append(...Object.values(bucket).map(link2html))
-})
+onOrIfDomContentLoaded(main)

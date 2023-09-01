@@ -3,19 +3,7 @@ import { promptChangeLink, deleteLink } from "/js/bucket.js"
 
 const $bucket = $("#bucket")
 
-const $nextVisible = ($el) => {
-	do
-		$el = $el.nextElementSibling
-	while ($el && $el.classList.contains("hidden"))
-	return $el
-}
-
-const $prevVisible = ($el) => {
-	do
-		$el = $el.previousElementSibling
-	while ($el && $el.classList.contains("hidden"))
-	return $el
-}
+const main = () => document.onkeydown = keyboardNav
 
 const keyboardNav = (e) => {
 	if (e.key === "Escape")
@@ -68,4 +56,18 @@ const keyboardNav = (e) => {
 	}
 }
 
-onOrIfDomContentLoaded(() => document.onkeydown = keyboardNav)
+const $nextVisible = ($el) => {
+	do
+		$el = $el.nextElementSibling
+	while ($el && $el.classList.contains("hidden"))
+	return $el
+}
+
+const $prevVisible = ($el) => {
+	do
+		$el = $el.previousElementSibling
+	while ($el && $el.classList.contains("hidden"))
+	return $el
+}
+
+onOrIfDomContentLoaded(main)
