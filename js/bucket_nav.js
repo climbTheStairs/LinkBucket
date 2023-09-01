@@ -50,6 +50,17 @@ const keyboardNav = (e) => {
 			?.classList.add("highlighted")
 		return
 
+	case "g":
+		$hi?.classList.remove("highlighted")
+		$bucket.children[0]?.classList.add("highlighted")
+		return
+
+	case "G":
+		$hi?.classList.remove("highlighted")
+		$bucket.children[$bucket.children.length-1]
+			?.classList.add("highlighted")
+		return
+
 	case "Enter":
 		$hi?.$("a").click()
 		return
