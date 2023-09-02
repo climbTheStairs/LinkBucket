@@ -21,4 +21,5 @@
 - reordering links (?)
 - browser search suggestions (?)
 - ~~keyboard controls~~
-- mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`)
+- mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`) (?)
+- tests (?)
