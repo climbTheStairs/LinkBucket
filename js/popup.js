@@ -24,8 +24,8 @@ const saveTab = async function(e) {
 		favIconUrl: tabCurr.favIconUrl,
 	}
 	const tags = this.tags.value.split(",").map(x => x.trim())
-	const ts = this.ts.value
-	if (isNaN(new Date(ts))) {
+	const ts = this.ts.value.trim()
+	if (ts && Number.isNaN(+new Date(ts))) {
 		return // TODO: error handling
 	}
 	await saveTabsAsLinks([tabEdited], tags, ts)
