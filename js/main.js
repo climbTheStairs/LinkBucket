@@ -16,7 +16,7 @@ const QUERY_WIN_CURR = { currentWindow: true, pinned: false }
 
 const getConfig = async () => {
 	const { config } = await S.get({ config: {} })
-	return Object.assign({}, DEFAULT_CONFIG, config)
+	return { ...DEFAULT_CONFIG, ...config }
 }
 
 const getTags = async () => {
