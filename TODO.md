@@ -4,22 +4,25 @@
 - ~~dependency management~~
 - ~~Git~~
 - error handling
+- log errors
 - documentation (`README.md`, doc comments)
 - ~~`config.html`~~
 - ~~changing and deleting of links~~
-- don't store duplicate favicons
+- don't store duplicate favicons (WIP)
+- special handling for non-`https?` link
 - import and export all data
 - ~~filtering by tag~~
-- refresh `bucket.html` on storage change
-- Manifest V3 compatibility
+- update `bucket.html` on storage change (optional)
+- chromium (Manifest V3) compatibility
 - sync to server
 - UI
 - `optional_permissions`
 - TypeScript (?)
 - icon
 - optional audio notifications (?)
-- reordering links (?)
+- sort links by
 - browser search suggestions (?)
-- ~~keyboard controls~~
+- keyboard controls (WIP)
 - mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`) (?)
 - tests (?)
+- need for locks (?)
