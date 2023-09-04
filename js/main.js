@@ -29,9 +29,26 @@ const getTags = async () => {
 	return tags.split(",").map(x => x.trim())
 }
 
+const saveFavicon = (favicons, url, favicon) => {
+	try {
+		const { host } = new URL(url)
+		if (host && favicon)
+			favicons[host] = favicon
+	} catch (_) {
+		// Only possible error is if `url` is invalid;
+		// in that case, do absolutely nothing.
+	}
+}
+
 const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
-	let { bucket, maxId } = await S.get({ bucket: {}, maxId: 0 })
-	for (const { title, url, favIconUrl } of tabs)
-		bucket[++maxId] = { id: maxId, title, url, tags, ts, favIconUrl }
-	await S.set({ bucket, maxId })
+	let { bucket, favicons, maxId } = await S.get({
+		bucket: {},
+		favicons: {},
+		maxId: 0,
+	})
+	for (const { title, url, favIconUrl } of tabs) {
+		saveFavicon(favicons, url, favIconUrl)
+		bucket[++maxId] = { id: maxId, title, url, tags, ts }
+	}
+	await S.set({ bucket, favicons, maxId })
 }

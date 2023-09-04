@@ -9,7 +9,7 @@ export { promptChangeLink, deleteLink }
 
 extendProto.Element()
 
-const { bucket } = await S.get({ bucket: {} })
+const { bucket, favicons } = await S.get({ bucket: {}, favicons: {} })
 
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
@@ -56,13 +56,21 @@ const evalRpn = (rpn, f = x => x) => {
 	return stk.reduce(OPS._implicit)
 }
 
-const link2html = ({ id, title, url, tags, ts, favIconUrl }) => {
+const getFavicon = (url) => {
+	try {
+		return favicons[new URL(url).host] ?? ""
+	} catch (_) {
+		return ""
+	}
+}
+
+const link2html = ({ id, title, url, tags, ts }) => {
 	const $li = $create("li", {
 		id: "link-" + id,
 	})
 	const $icon = $create("img", {
 		className: "favicon",
-		src: favIconUrl,
+		src: getFavicon(url), // TODO: Default favicon
 	})
 	const $a = $create("a")
 	updateLinkA($a, { title, url, tags, ts })
