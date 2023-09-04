@@ -74,19 +74,19 @@ const link2html = ({id, title, url, tags, ts}) => {
 	})
 	const $a = $create("a")
 	updateLinkA($a, {title, url, tags, ts})
-	const $change = $create("button", {
+	const $c = $create("button", {
 		textContent: "c",
 		onclick: function() {
 			promptChangeLink(this.closest("li"))
 		},
 	})
-	const $delete = $create("button", {
+	const $d = $create("button", {
 		textContent: "d",
 		onclick: function() {
 			deleteLink(this.closest("li"))
 		},
 	})
-	$li.append($icon, $a, $change, $delete)
+	$li.append($d, $c, $icon, $a)
 	return $li
 }
 
