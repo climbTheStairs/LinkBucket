@@ -1,5 +1,5 @@
-import { $, onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
-import { promptChangeLink, deleteLink } from "/js/bucket.js"
+import {$, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
+import {promptChangeLink, deleteLink} from "/js/bucket.js"
 
 const $bucket = $("#bucket")
 

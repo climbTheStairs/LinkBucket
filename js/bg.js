@@ -39,11 +39,11 @@ const save_close_all = async () => {
 
 const go_to_bucket = async () => {
 	const url = R.getURL("/html/bucket.html")
-	const [tabBucket] = await T.query({ currentWindow: true, url })
+	const [tabBucket] = await T.query({currentWindow: true, url})
 	if (tabBucket)
-		await T.update(tabBucket.id, { active: true })
+		await T.update(tabBucket.id, {active: true})
 	else
-		await T.create({ url: "/html/bucket.html" })
+		await T.create({url: "/html/bucket.html"})
 }
 
 const cmds = {
@@ -52,5 +52,5 @@ const cmds = {
 	go_to_bucket,
 }
 
-C.onCommand.addListener(cmd => console.debug("recv cmd: " + cmd))
+C.onCommand.addListener(cmd => console.debug("recv cmd: "+cmd))
 C.onCommand.addListener(cmd => cmds[cmd]().catch(console.error))

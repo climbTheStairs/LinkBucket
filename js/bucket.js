@@ -3,13 +3,13 @@ import {
 	extendProto,
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
-import { S } from "/js/main.js"
+import {S} from "/js/main.js"
 
-export { promptChangeLink, deleteLink }
+export {promptChangeLink, deleteLink}
 
 extendProto.Element()
 
-const { bucket, favicons } = await S.get({ bucket: {}, favicons: {} })
+const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
 
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
@@ -64,16 +64,16 @@ const getFavicon = (url) => {
 	}
 }
 
-const link2html = ({ id, title, url, tags, ts }) => {
+const link2html = ({id, title, url, tags, ts}) => {
 	const $li = $create("li", {
-		id: "link-" + id,
+		id: "link-"+id,
 	})
 	const $icon = $create("img", {
 		className: "favicon",
 		src: getFavicon(url), // TODO: Default favicon
 	})
 	const $a = $create("a")
-	updateLinkA($a, { title, url, tags, ts })
+	updateLinkA($a, {title, url, tags, ts})
 	const $change = $create("button", {
 		textContent: "c",
 		onclick: function() {
@@ -90,7 +90,7 @@ const link2html = ({ id, title, url, tags, ts }) => {
 	return $li
 }
 
-const updateLinkA = ($a, { title, url, tags, ts }) => {
+const updateLinkA = ($a, {title, url, tags, ts}) => {
 	$a.textContent = `${title || url} (${tags.join(",")})`
 	$a.href = url
 	$a.title = ts
@@ -120,7 +120,7 @@ const changeLink = async function($li) {
 	// This is different from `deleteLink()`.
 	// TODO: Do this a different way such that consistency
 	try {
-		await S.set({ bucket })
+		await S.set({bucket})
 	} catch (e) {
 		return // TODO: error handling
 	}
@@ -130,7 +130,7 @@ const deleteLink = async function($li) {
 	const id = $li.id.slice("link-".length)
 	delete bucket[id]
 	try {
-		await S.set({ bucket })
+		await S.set({bucket})
 	} catch (e) {
 		return // TODO: error handling
 	}

@@ -1,4 +1,4 @@
-import { onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
+import {onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
 import {
 	S, T, QUERY_TAB_CURR,
 	getConfig, saveTabsAsLinks,

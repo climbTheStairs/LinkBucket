@@ -1,5 +1,5 @@
-import { onOrIfDomContentLoaded } from "/lib/site/js/stairz.js"
-import { S, getConfig } from "/js/main.js"
+import {onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
+import {S, getConfig} from "/js/main.js"
 
 const main = async () => {
 	const config = await getConfig()
@@ -15,7 +15,7 @@ const configSave = async function(e) {
 	const config = Object.fromEntries([...$form]
 		.filter($in => $in.name)
 		.map($in => [$in.name, $in.checked]))
-	await S.set({ config })
+	await S.set({config})
 }
 
 onOrIfDomContentLoaded(main)
