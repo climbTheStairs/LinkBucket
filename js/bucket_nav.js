@@ -5,7 +5,7 @@ const $bucket = $("#bucket")
 
 const main = () => document.onkeydown = keyboardNav
 
-const keyboardNav = (e) => {
+const keyboardNav = async (e) => {
 	if (e.key === "Escape")
 		return document.activeElement.blur()
 	if (![document.body, null].includes(document.activeElement))
@@ -45,9 +45,9 @@ const keyboardNav = (e) => {
 	case "d":
 		if (!$hi)
 			return
-		deleteLink($hi)
-		;($nextVisible($hi) || $prevVisible($hi))
-			?.classList.add("highlighted")
+		const $next = $nextVisible($hi) || $prevVisible($hi)
+		if (await deleteLink($hi))
+			$next?.classList.add("highlighted")
 		return
 
 	case "g":

@@ -9,7 +9,7 @@
 - ~~`config.html`~~
 - ~~changing and deleting of links~~
 - don't store duplicate favicons (WIP)
-- special handling for non-`https?` link
+- special handling for non-`http` links
 - import and export all data
 - ~~filtering by tag~~
 - update `bucket.html` on storage change (optional)
@@ -23,6 +23,8 @@
 - sort links by
 - browser search suggestions (?)
 - keyboard controls (WIP)
+	- select multiple (visual mode?)
+	- delete without confirmation
 - mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`) (?)
 - tests (?)
 - need for locks (?)

@@ -127,14 +127,19 @@ const changeLink = async function($li) {
 }
 
 const deleteLink = async function($li) {
+	if (!window.confirm("Are you sure you want to delete this link?"))
+		return false
 	const id = $li.id.slice("link-".length)
+	const link = bucket[id]
 	delete bucket[id]
 	try {
 		await S.set({bucket})
 	} catch (e) {
-		return // TODO: error handling
+		bucket[id] = link
+		return false // TODO: error handling
 	}
 	$li.remove()
+	return true
 }
 
 onOrIfDomContentLoaded(main)
