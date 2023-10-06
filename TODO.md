@@ -15,7 +15,13 @@
 - update `bucket.html` on storage change (optional)
 - chromium (Manifest V3) compatibility
 - sync to server
-- UI
+- front-end features
+	- OneTab-like behav
+	- tag query aliases/"metatags"
+	- tabs
+	- pinned tag queries
+	- text search
+	- list all tabs?
 - `optional_permissions`
 - TypeScript (?)
 - icon
@@ -28,3 +34,12 @@
 - mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`) (?)
 - tests (?)
 - need for locks (?)
+- pages load slowly
+- find out if `confirm()` is bad because it can be disabled, breaking functionality?
+- for each kind of special link, record:
+	- url
+	- `tabs.Tab` obj has `favIconUrl`
+	- `new URL` properties `host`, `hostname`, `origin`
+	- openable from lb
+	- match pattern
+	- OneTab behavior
