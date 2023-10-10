@@ -18,6 +18,7 @@
 - front-end features
 	- OneTab-like behav
 	- tag query aliases/"metatags"
+	- hierarchical subtags
 	- tabs
 	- pinned tag queries
 	- text search
@@ -43,3 +44,5 @@
 	- openable from lb
 	- match pattern
 	- OneTab behavior
+- UI extensibility via JS
+- find better name (?)
