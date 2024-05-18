@@ -77,17 +77,17 @@ const $prevVisible = ($link) => {
 }
 
 const modifyNewLinks = (records) => {
-	for (const record of records)
-		for (const $link of [...record.addedNodes])
+	for (const {addedNodes} of records)
+		for (const $link of addedNodes)
 			modifyNewLink($link)
 }
 
 const modifyNewLink = ($link) => {
 	const $d = $link.$(".link-delete")
-	const linkDeleteOld = $d.onclick
-	$d.onclick = async function() {
+	const linkDeleteOld = $d.onclick.bind($d)
+	$d.onclick = async () => {
 		const $selNext = $nextVisible($sel) ?? $prevVisible($sel)
-		await linkDeleteOld.bind(this)()
+		await linkDeleteOld()
 		if (!$bucket.contains($sel))
 			selLink($selNext)
 	}

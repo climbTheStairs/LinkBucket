@@ -74,16 +74,12 @@ const link2html = ({id, title, url, tags, ts}) => {
 	const $c = $create("button", {
 		textContent: "c",
 		className: "link-change",
-		onclick: async function() {
-			await linkChangePrompt(this.closest("li"))
-		},
+		onclick: function() { return linkChangePrompt(this.closest("li")) },
 	})
 	const $d = $create("button", {
 		textContent: "d",
 		className: "link-delete",
-		onclick: async function() {
-			await linkDelete(this.closest("li"))
-		},
+		onclick: function() { return linkDelete(this.closest("li")) },
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
