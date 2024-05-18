@@ -10,55 +10,12 @@ const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
 
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
-const $search = $("#search")
 const $bucket = $("#bucket")
-
-const and = (x, y) => y && x
-const or  = (x, y) => y || x
-const not = (x) => !x
-const OPS = {
-	and, or, not,
-	_implicit: and, "+": or, "-": not,
-}
 
 const main = () => {
 	$("#config").onclick = () => R.openOptionsPage()
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
-	$search.onkeydown = (e) => {
-		if (e.key === "Enter")
-			filt($search.value)
-	}
 	$bucket.append(...Object.values(bucket).map(link2html))
-}
-
-const filt = (q) => {
-	q = q.toLowerCase().split(" ").filter(x => x)
-	for (const $li of $bucket.children) {
-		const id = $li.id.slice("link-".length)
-		const hasTag = [].includes.bind(bucket[id].tags)
-		$li.classList.toggle("hidden", !evalRpn(q, hasTag))
-	}
-}
-
-const evalRpn = (rpn, f = x => x) => {
-	if (rpn.length == 0)
-		return true
-	const stk = []
-	for (const t of rpn)
-		if (Object.hasOwn(OPS, t))
-			stk.push(OPS[t](
-				...[...Array(OPS[t].length)].map(() => stk.pop())))
-		else
-			stk.push(f(t))
-	return stk.reduce(OPS._implicit)
-}
-
-const getFavicon = (url) => {
-	try {
-		return favicons[new URL(url).host] ?? ""
-	} catch (_) {
-		return ""
-	}
 }
 
 const link2html = ({id, title, url, tags, ts}) => {
@@ -83,6 +40,14 @@ const link2html = ({id, title, url, tags, ts}) => {
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
+}
+
+const getFavicon = (url) => {
+	try {
+		return favicons[new URL(url).host] ?? ""
+	} catch (_) {
+		return ""
+	}
 }
 
 // updateLinkA updates link `<a>` element.
