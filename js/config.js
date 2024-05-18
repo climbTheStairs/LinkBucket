@@ -8,8 +8,8 @@ const main = () => {
 }
 
 const configLoad = async () => {
-	const config = await getConfig()
 	const [$form] = document.forms
+	const config = await getConfig()
 	;[...$form].filter($in => $in.name)
 		.forEach($in => $in.checked = config[$in.name])
 }
