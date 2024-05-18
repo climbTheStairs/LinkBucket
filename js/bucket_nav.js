@@ -28,7 +28,7 @@ const keyboardNav = async (e) => {
 
 	case "k":
 		if (!$sel)
-			return selLink($bucket.children[$bucket.children.length-1])
+			return selLink($bucket.children[0])
 		if (!($li = $findVisibleBwd($sel.previousElementSibling)))
 			return
 		return selLink($li)
