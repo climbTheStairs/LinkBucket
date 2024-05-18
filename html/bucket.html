@@ -8,20 +8,31 @@
 <body>
 	<dialog>
 		<form method="dialog">
-			<label for="in-title">Title: </label>
-			<input type="text" name="title" id="in-title" />
-			<br />
-			<label for="in-url">URL: </label>
-			<input type="text" name="url" id="in-url" />
-			<br />
-			<label for="in-tags">Tags: </label>
-			<input type="text" name="tags" id="in-tags" />
-			<br />
-			<label for="in-ts">Timestamp: </label>
-			<input type="text" name="ts" id="in-ts" />
-			<br />
-			<button type="button">Cancel</button>
-			<button type="submit">Save</button>
+			<table>
+				<tr>
+					<td><label for="in-title">title</label></td>
+					<td><input type="text" name="title" id="in-title" /></td>
+				</tr>
+				<tr>
+					<td><label for="in-url">url</label></td>
+					<td><input type="text" name="url" id="in-url" /></td>
+				</tr>
+				<tr>
+					<td><label for="in-tags">tags</label></td>
+					<td><input type="text" name="tags" id="in-tags" /></td>
+				</tr>
+				<tr>
+					<td><label for="in-ts">timestamp</label></td>
+					<td><input type="text" name="ts" id="in-ts" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button type="button">cancel</button>
+						<button type="submit">save</button>
+					</td>
+				</tr>
+			</table>
 		</form>
 	</dialog>
 	<input type="text" id="search" />
