@@ -53,22 +53,22 @@ const keyboardNav = async (e) => {
 	}
 }
 
-const selLink = ($link) => {
+const selLink = ($li) => {
 	$sel?.classList.remove("selected")
-	$sel = $link
+	$sel = $li
 	$sel?.classList.add("selected")
 }
 
-const $findVisibleFwd = ($link) => {
-	if (!$link || !$link.classList.contains("hidden"))
-		return $link
-	return $findVisibleFwd($link.nextElementSibling)
+const $findVisibleFwd = ($li) => {
+	if (!$li || !$li.classList.contains("hidden"))
+		return $li
+	return $findVisibleFwd($li.nextElementSibling)
 }
 
-const $findVisibleBwd = ($link) => {
-	if (!$link || !$link.classList.contains("hidden"))
-		return $link
-	return $findVisibleBwd($link.previousElementSibling)
+const $findVisibleBwd = ($li) => {
+	if (!$li || !$li.classList.contains("hidden"))
+		return $li
+	return $findVisibleBwd($li.previousElementSibling)
 }
 
 const selNextIfDeleted = (records) => {
