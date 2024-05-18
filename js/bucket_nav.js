@@ -2,6 +2,7 @@ import {$, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
 import {promptChangeLink, deleteLink} from "/js/bucket.js"
 
 const $bucket = $("#bucket")
+let $sel
 
 const main = () => document.onkeydown = keyboardNav
 
@@ -11,27 +12,18 @@ const keyboardNav = async (e) => {
 	if (![document.body, null].includes(document.activeElement))
 		return
 
-	const $sel = $(".selected")
+	$sel = $(".selected")
 
 	switch (e.key) {
 	case "j":
 		if (!$sel)
-			return $bucket.children[0].classList.add("selected")
-		if (!$nextVisible($sel))
-			return
-		$sel.classList.remove("selected")
-		$nextVisible($sel).classList.add("selected")
-		return
+			return selLink($bucket.children[0])
+		return selLink($nextVisible($sel))
 
 	case "k":
 		if (!$sel)
-			return $bucket.children[$bucket.children.length-1]
-				.classList.add("selected")
-		if (!$prevVisible($sel))
-			return
-		$sel.classList.remove("selected")
-		$prevVisible($sel).classList.add("selected")
-		return
+			return selLink($bucket.children[$bucket.children.length-1])
+		return selLink($prevVisible($sel))
 
 	case "c":
 		if (!$sel)
@@ -47,19 +39,14 @@ const keyboardNav = async (e) => {
 			return
 		const $next = $nextVisible($sel) || $prevVisible($sel)
 		if (await deleteLink($sel))
-			$next?.classList.add("selected")
+			selLink($next)
 		return
 
 	case "g":
-		$sel?.classList.remove("selected")
-		$bucket.children[0]?.classList.add("selected")
-		return
+		return selLink($bucket.children[0])
 
 	case "G":
-		$sel?.classList.remove("selected")
-		$bucket.children[$bucket.children.length-1]
-			?.classList.add("selected")
-		return
+		return selLink($bucket.children[$bucket.children.length-1])
 
 	case "Enter":
 		$sel?.$("a").click()
@@ -67,16 +54,22 @@ const keyboardNav = async (e) => {
 	}
 }
 
+const selLink = ($link) => {
+	$sel?.classList.remove("selected")
+	$sel = $link
+	$sel?.classList.add("selected")
+}
+
 const $nextVisible = ($link) => {
 	do
-		$link = $link.nextElementSibling
+		$link = $link?.nextElementSibling
 	while ($link && $link.classList.contains("hidden"))
 	return $link
 }
 
 const $prevVisible = ($link) => {
 	do
-		$link = $link.previousElementSibling
+		$link = $link?.previousElementSibling
 	while ($link && $link.classList.contains("hidden"))
 	return $link
 }
