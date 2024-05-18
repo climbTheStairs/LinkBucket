@@ -14,6 +14,8 @@ const main = async () => {
 	$form.ts.value = new Date().toISOString()
 	$form.close.checked = config.popup_close
 	$form.onsubmit = saveTab
+	// Sometimes autofocus doesn't work.
+	setTimeout(() => $form.tags.focus(), 1)
 }
 
 const saveTab = async function(e) {
