@@ -1,13 +1,15 @@
-import {$, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
+import {$, extendProto, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
+extendProto.Element()
 
 const $bucket = $("#bucket")
-let $sel, $selNext
+let $sel
 
 const main = () => {
 	document.onkeydown = keyboardNav
+	new MutationObserver(modifyNewLinks).observe($bucket, {childList: true})
 	for (const $link of $bucket.children)
-		// Theoretically but not practically possible race condition (?)
-		$link.addEventListener("link-delete", () => selLink($selNext))
+		if (!("navigable" in $link.dataset))
+			modifyNewLink($link)
 }
 
 const keyboardNav = async (e) => {
@@ -57,7 +59,6 @@ const keyboardNav = async (e) => {
 const selLink = ($link) => {
 	$sel?.classList.remove("selected")
 	$sel = $link
-	$selNext = $nextVisible($sel) ?? $prevVisible($sel)
 	$sel?.classList.add("selected")
 }
 
@@ -73,6 +74,24 @@ const $prevVisible = ($link) => {
 		$link = $link?.previousElementSibling
 	while ($link && $link.classList.contains("hidden"))
 	return $link
+}
+
+const modifyNewLinks = (records) => {
+	for (const record of records)
+		for (const $link of [...record.addedNodes])
+			modifyNewLink($link)
+}
+
+const modifyNewLink = ($link) => {
+	const $d = $link.$(".link-delete")
+	const linkDeleteOld = $d.onclick
+	$d.onclick = async function() {
+		const $selNext = $nextVisible($sel) ?? $prevVisible($sel)
+		await linkDeleteOld.bind(this)()
+		if (!$bucket.contains($sel))
+			selLink($selNext)
+	}
+	$link.dataset.navigable = true
 }
 
 onOrIfDomContentLoaded(main)

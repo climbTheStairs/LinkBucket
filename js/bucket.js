@@ -74,12 +74,16 @@ const link2html = ({id, title, url, tags, ts}) => {
 	const $c = $create("button", {
 		textContent: "c",
 		className: "link-change",
-		onclick: function() { linkChangePrompt(this.closest("li")) },
+		onclick: async function() {
+			await linkChangePrompt(this.closest("li"))
+		},
 	})
 	const $d = $create("button", {
 		textContent: "d",
 		className: "link-delete",
-		onclick: function() { linkDelete(this.closest("li")) },
+		onclick: async function() {
+			await linkDelete(this.closest("li"))
+		},
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
@@ -122,7 +126,7 @@ const linkChangeExec = async function($li) {
 	}
 }
 
-const linkDelete = async function($li) {
+const linkDelete = async ($li) => {
 	if (!window.confirm("Are you sure you want to delete this link?"))
 		return
 	const id = $li.id.slice("link-".length)
@@ -134,7 +138,6 @@ const linkDelete = async function($li) {
 		bucket[id] = link
 		return // TODO: error handling
 	}
-	$li.dispatchEvent(new Event("link-delete"))
 	$li.remove()
 }
 
