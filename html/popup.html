@@ -6,21 +6,31 @@
 </head>
 <body>
 	<form>
-		<label for="in-title">Title: </label>
-		<input type="text" name="title" id="in-title" />
-		<br />
-		<label for="in-url">URL: </label>
-		<input type="text" name="url" id="in-url" />
-		<br />
-		<label for="in-tags">Tags: </label>
-		<input type="text" name="tags" id="in-tags" autofocus="autofocus" />
-		<br />
-		<label for="in-ts">Timestamp: </label>
-		<input type="text" name="ts" id="in-ts" />
-		<br />
-		<label for"in-close">Close tab? </label>
-		<input type="checkbox" name="close" id="in-close" checked="checked" />
-		<button type="submit">Save</button>
+		<table>
+			<tr>
+				<td><label for="in-title">title</label></td>
+				<td><input type="text" name="title" id="in-title" /></td>
+			</tr>
+			<tr>
+				<td><label for="in-url">url</label></td>
+				<td><input type="text" name="url" id="in-url" /></td>
+			</tr>
+			<tr>
+				<td><label for="in-tags">tags</label></td>
+				<td><input type="text" name="tags" id="in-tags" autofocus="autofocus" /></td>
+			</tr>
+			<tr>
+				<td><label for="in-ts">timestamp</label></td>
+				<td><input type="text" name="ts" id="in-ts" /></td>
+			</tr>
+			<tr>
+				<td>
+					<label for"in-close">close tab? </label>
+					<input type="checkbox" name="close" id="in-close" checked="checked" />
+				</td>
+				<td><button type="submit">save</button></td>
+			</tr>
+		</table>
 	</form>
 	<script src="/lib/site/js/stairz.js" type="module"></script>
 	<script src="/js/main.js" type="module"></script>
