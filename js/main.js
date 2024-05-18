@@ -29,17 +29,6 @@ const getTags = async () => {
 	return tags.split(",").map(x => x.trim())
 }
 
-const saveFavicon = (favicons, url, favicon) => {
-	try {
-		const {host} = new URL(url)
-		if (host && favicon)
-			favicons[host] = favicon
-	} catch (_) {
-		// Only possible error is if `url` is invalid;
-		// in that case, do absolutely nothing.
-	}
-}
-
 const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
 	let {bucket, favicons, maxId} = await S.get({
 		bucket: {},
@@ -52,3 +41,15 @@ const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
 	}
 	await S.set({bucket, favicons, maxId})
 }
+
+const saveFavicon = (favicons, url, favicon) => {
+	try {
+		const {host} = new URL(url)
+		if (host && favicon)
+			favicons[host] = favicon
+	} catch (_) {
+		// Only possible error is if `url` is invalid;
+		// in that case, do absolutely nothing.
+	}
+}
+
