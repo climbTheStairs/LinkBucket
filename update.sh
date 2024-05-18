@@ -11,16 +11,13 @@ debug() { [ -n "$DEBUG" ] && p "debug: $1" >&2; }
 # TODO: better documentation
 
 main() (
-	[ -e tmp ] &&
-		fail 'tmp already exists; move or remove it to prevent data loss'
 	mkdir tmp && cd tmp ||
 		fail 'mkdir or cd tmp failed'
 	while IFS= read -r ln; do
 		# shellcheck disable=SC2086
 		update_ck $ln || exit
 	done < ../dependencies.txt
-	debug 'cleaning up if possible'
-	rmdir ../tmp 2> /dev/null || true
+	rmdir ../tmp
 )
 
 # update_ck <repo_name> <repo_url> <files...>
@@ -41,18 +38,18 @@ update_ck() (
 	# WARNING: `unzip` does not support `--`
 	unzip -oq "$file_zip" $(prepend "$zip_root/" "$@") ||
 		fail 'failed to extract files from downloaded repo'
-	rm -- "$file_zip"
 
 	debug 'comparing unzipped files with lib/, applying changes, and printing changed files'
 	for f do
-		cmp -s "../lib/$repo_name/$f" "$zip_root/$f" 2> /dev/null &&
+		cmp -s -- "../lib/$repo_name/$f" "$zip_root/$f" 2> /dev/null &&
 			continue
-		mkdir -p "$(dirname "../lib/$repo_name/$f")"
-		mv -f -- "$zip_root/$f" "../lib/$repo_name/$f"
+		mkdir -p "$(dirname "../lib/$repo_name/$f")" &&
+			mv -f -- "$zip_root/$f" "../lib/$repo_name/$f" ||
+			fail 'mkdir or mv failed; idk why'
 		p "$repo_name/$f"
 	done
 
-	rm -r -- "$zip_root"
+	rm -r -- "$file_zip" "$zip_root"
 )
 
 # prepend <substr> <args...>
