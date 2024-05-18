@@ -3,7 +3,7 @@ import {
 	extendProto,
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
-import {S} from "/js/main.js"
+import {R, S} from "/js/main.js"
 
 export {promptChangeLink, deleteLink}
 
@@ -25,6 +25,7 @@ const OPS = {
 }
 
 const main = () => {
+	$("#config").onclick = () => R.openOptionsPage()
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
 	$search.onkeydown = (e) => {
 		if (e.key === "Enter")
