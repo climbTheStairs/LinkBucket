@@ -4,7 +4,6 @@ import {
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
 import {R, S} from "/js/main.js"
-
 extendProto.Element()
 
 const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
@@ -75,35 +74,35 @@ const link2html = ({id, title, url, tags, ts}) => {
 	const $c = $create("button", {
 		textContent: "c",
 		className: "link-change",
-		onclick: function() { promptChangeLink(this.closest("li")) },
+		onclick: function() { linkChangePrompt(this.closest("li")) },
 	})
 	const $d = $create("button", {
 		textContent: "d",
 		className: "link-delete",
-		onclick: function() { deleteLink(this.closest("li")) },
+		onclick: function() { linkDelete(this.closest("li")) },
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
 }
 
-// TODO: Why is this function called updateLinkA?
+// updateLinkA updates link `<a>` element.
 const updateLinkA = ($a, {title, url, tags, ts}) => {
 	$a.textContent = `${title || url} (${tags.join(",")})`
 	$a.href = url
 	$a.title = ts
 }
 
-const promptChangeLink = function($li) {
+const linkChangePrompt = function($li) {
 	const id = $li.id.slice("link-".length)
 	$form.title.value = bucket[id].title
 	$form.url.value   = bucket[id].url
 	$form.tags.value  = bucket[id].tags.join(",")
 	$form.ts.value    = bucket[id].ts
-	$form.onsubmit = () => changeLink($li)
+	$form.onsubmit = () => linkChangeExec($li)
 	$dialog.showModal()
 }
 
-const changeLink = async function($li) {
+const linkChangeExec = async function($li) {
 	const id = $li.id.slice("link-".length)
 	bucket[id].title = $form.title.value
 	bucket[id].url   = $form.url.value
@@ -114,7 +113,7 @@ const changeLink = async function($li) {
 	// `$li` is updated in the UI
 	// regardless of whether storage is successfully updated
 	// so that the user does not lose their changes if it is not.
-	// This is different from `deleteLink()`.
+	// This is different from `linkDelete()`.
 	// TODO: Do this a different way such that consistency
 	try {
 		await S.set({bucket})
@@ -123,7 +122,7 @@ const changeLink = async function($li) {
 	}
 }
 
-const deleteLink = async function($li) {
+const linkDelete = async function($li) {
 	if (!window.confirm("Are you sure you want to delete this link?"))
 		return
 	const id = $li.id.slice("link-".length)
