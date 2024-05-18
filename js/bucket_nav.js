@@ -11,74 +11,74 @@ const keyboardNav = async (e) => {
 	if (![document.body, null].includes(document.activeElement))
 		return
 
-	const $hi = $(".highlighted")
+	const $sel = $(".selected")
 
 	switch (e.key) {
 	case "j":
-		if (!$hi)
-			return $bucket.children[0].classList.add("highlighted")
-		if (!$nextVisible($hi))
+		if (!$sel)
+			return $bucket.children[0].classList.add("selected")
+		if (!$nextVisible($sel))
 			return
-		$hi.classList.remove("highlighted")
-		$nextVisible($hi).classList.add("highlighted")
+		$sel.classList.remove("selected")
+		$nextVisible($sel).classList.add("selected")
 		return
 
 	case "k":
-		if (!$hi)
+		if (!$sel)
 			return $bucket.children[$bucket.children.length-1]
-				.classList.add("highlighted")
-		if (!$prevVisible($hi))
+				.classList.add("selected")
+		if (!$prevVisible($sel))
 			return
-		$hi.classList.remove("highlighted")
-		$prevVisible($hi).classList.add("highlighted")
+		$sel.classList.remove("selected")
+		$prevVisible($sel).classList.add("selected")
 		return
 
 	case "c":
-		if (!$hi)
+		if (!$sel)
 			return
 		// `setTimeout` with 1ms prevents "c"
 		// from being inserted into the opened `<input>`.
 		// TODO: Is there a better way to do this?
-		setTimeout(() => promptChangeLink($hi), 1)
+		setTimeout(() => promptChangeLink($sel), 1)
 		return
 
 	case "d":
-		if (!$hi)
+		if (!$sel)
 			return
-		const $next = $nextVisible($hi) || $prevVisible($hi)
-		if (await deleteLink($hi))
-			$next?.classList.add("highlighted")
+		const $next = $nextVisible($sel) || $prevVisible($sel)
+		if (await deleteLink($sel))
+			$next?.classList.add("selected")
 		return
 
 	case "g":
-		$hi?.classList.remove("highlighted")
-		$bucket.children[0]?.classList.add("highlighted")
+		$sel?.classList.remove("selected")
+		$bucket.children[0]?.classList.add("selected")
 		return
 
 	case "G":
-		$hi?.classList.remove("highlighted")
+		$sel?.classList.remove("selected")
 		$bucket.children[$bucket.children.length-1]
-			?.classList.add("highlighted")
+			?.classList.add("selected")
 		return
 
 	case "Enter":
-		$hi?.$("a").click()
+		$sel?.$("a").click()
 		return
 	}
 }
 
-const $nextVisible = ($el) => {
+const $nextVisible = ($link) => {
 	do
-		$el = $el.nextElementSibling
-	while ($el && $el.classList.contains("hidden"))
-	return $el
+		$link = $link.nextElementSibling
+	while ($link && $link.classList.contains("hidden"))
+	return $link
 }
 
-const $prevVisible = ($el) => {
+const $prevVisible = ($link) => {
 	do
-		$el = $el.previousElementSibling
-	while ($el && $el.classList.contains("hidden"))
-	return $el
+		$link = $link.previousElementSibling
+	while ($link && $link.classList.contains("hidden"))
+	return $link
 }
 
 onOrIfDomContentLoaded(main)
