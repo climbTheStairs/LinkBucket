@@ -6,10 +6,7 @@ let $sel
 
 const main = () => {
 	document.onkeydown = keyboardNav
-	new MutationObserver(modifyNewLinks).observe($bucket, {childList: true})
-	for (const $link of $bucket.children)
-		if (!("navigable" in $link.dataset))
-			modifyNewLink($link)
+	new MutationObserver(selNextIfDeleted).observe($bucket, {childList: true})
 }
 
 const keyboardNav = async (e) => {
@@ -24,12 +21,12 @@ const keyboardNav = async (e) => {
 	case "j":
 		if (!$sel)
 			return selLink($bucket.children[0])
-		return selLink($nextVisible($sel))
+		return selLink($findVisibleFwd($sel.nextElementSibling))
 
 	case "k":
 		if (!$sel)
 			return selLink($bucket.children[$bucket.children.length-1])
-		return selLink($prevVisible($sel))
+		return selLink($findVisibleBwd($sel.previousElementSibling))
 
 	case "c":
 		if (!$sel)
@@ -62,36 +59,24 @@ const selLink = ($link) => {
 	$sel?.classList.add("selected")
 }
 
-const $nextVisible = ($link) => {
-	do
-		$link = $link?.nextElementSibling
-	while ($link && $link.classList.contains("hidden"))
-	return $link
+const $findVisibleFwd = ($link) => {
+	if (!$link || !$link.classList.contains("hidden"))
+		return $link
+	return $findVisibleFwd($link.nextElementSibling)
 }
 
-const $prevVisible = ($link) => {
-	do
-		$link = $link?.previousElementSibling
-	while ($link && $link.classList.contains("hidden"))
-	return $link
+const $findVisibleBwd = ($link) => {
+	if (!$link || !$link.classList.contains("hidden"))
+		return $link
+	return $findVisibleBwd($link.previousElementSibling)
 }
 
-const modifyNewLinks = (records) => {
-	for (const {addedNodes} of records)
-		for (const $link of addedNodes)
-			modifyNewLink($link)
-}
-
-const modifyNewLink = ($link) => {
-	const $d = $link.$(".link-delete")
-	const linkDeleteOld = $d.onclick.bind($d)
-	$d.onclick = async () => {
-		const $selNext = $nextVisible($sel) ?? $prevVisible($sel)
-		await linkDeleteOld()
-		if (!$bucket.contains($sel))
-			selLink($selNext)
-	}
-	$link.dataset.navigable = true
+const selNextIfDeleted = (records) => {
+	const r = records.find(({removedNodes}) =>
+		[...removedNodes].includes($sel))
+	if (r)
+		selLink($findVisibleFwd(r.nextSibling) ??
+			$findVisibleBwd(r.previousSibling))
 }
 
 onOrIfDomContentLoaded(main)
