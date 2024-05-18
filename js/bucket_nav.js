@@ -15,18 +15,23 @@ const keyboardNav = async (e) => {
 	if (![document.body, null].includes(document.activeElement))
 		return
 
+	let $li
 	$sel = $(".selected")
 
 	switch (e.key) {
 	case "j":
 		if (!$sel)
 			return selLink($bucket.children[0])
-		return selLink($findVisibleFwd($sel.nextElementSibling))
+		if (!($li = $findVisibleFwd($sel.nextElementSibling)))
+			return
+		return selLink($li)
 
 	case "k":
 		if (!$sel)
 			return selLink($bucket.children[$bucket.children.length-1])
-		return selLink($findVisibleBwd($sel.previousElementSibling))
+		if (!($li = $findVisibleBwd($sel.previousElementSibling)))
+			return
+		return selLink($li)
 
 	case "c":
 		if (!$sel)
