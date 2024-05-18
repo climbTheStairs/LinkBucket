@@ -50,8 +50,7 @@ const evalRpn = (rpn, f = x => x) => {
 	for (const t of rpn)
 		if (Object.hasOwn(OPS, t))
 			stk.push(OPS[t](
-				...[...Array(OPS[t].length)]
-					.map(() => stk.pop())))
+				...[...Array(OPS[t].length)].map(() => stk.pop())))
 		else
 			stk.push(f(t))
 	return stk.reduce(OPS._implicit)
@@ -77,15 +76,11 @@ const link2html = ({id, title, url, tags, ts}) => {
 	updateLinkA($a, {title, url, tags, ts})
 	const $c = $create("button", {
 		textContent: "c",
-		onclick: function() {
-			promptChangeLink(this.closest("li"))
-		},
+		onclick: function() { promptChangeLink(this.closest("li")) },
 	})
 	const $d = $create("button", {
 		textContent: "d",
-		onclick: function() {
-			deleteLink(this.closest("li"))
-		},
+		onclick: function() { deleteLink(this.closest("li")) },
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
