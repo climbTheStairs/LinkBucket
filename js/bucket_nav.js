@@ -1,10 +1,14 @@
 import {$, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
-import {promptChangeLink, deleteLink} from "/js/bucket.js"
 
 const $bucket = $("#bucket")
-let $sel
+let $sel, $selNext
 
-const main = () => document.onkeydown = keyboardNav
+const main = () => {
+	document.onkeydown = keyboardNav
+	for (const $link of $bucket.children)
+		// Theoretically but not practically possible race condition (?)
+		$link.addEventListener("link-delete", () => selLink($selNext))
+}
 
 const keyboardNav = async (e) => {
 	if (e.key === "Escape")
@@ -29,18 +33,14 @@ const keyboardNav = async (e) => {
 		if (!$sel)
 			return
 		// `setTimeout` with 1ms prevents "c"
-		// from being inserted into the opened `<input>`.
+		// from being inserted into `<input>` in opened modal.
 		// TODO: Is there a better way to do this?
-		setTimeout(() => promptChangeLink($sel), 1)
-		return
+		return setTimeout(() => $sel?.$(".link-change").click(), 1)
 
 	case "d":
 		if (!$sel)
 			return
-		const $next = $nextVisible($sel) || $prevVisible($sel)
-		if (await deleteLink($sel))
-			selLink($next)
-		return
+		return $sel?.$(".link-delete").click()
 
 	case "g":
 		return selLink($bucket.children[0])
@@ -57,6 +57,7 @@ const keyboardNav = async (e) => {
 const selLink = ($link) => {
 	$sel?.classList.remove("selected")
 	$sel = $link
+	$selNext = $nextVisible($sel) ?? $prevVisible($sel)
 	$sel?.classList.add("selected")
 }
 

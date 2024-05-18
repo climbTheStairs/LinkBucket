@@ -5,8 +5,6 @@ import {
 } from "/lib/site/js/stairz.js"
 import {R, S} from "/js/main.js"
 
-export {promptChangeLink, deleteLink}
-
 extendProto.Element()
 
 const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
@@ -76,16 +74,19 @@ const link2html = ({id, title, url, tags, ts}) => {
 	updateLinkA($a, {title, url, tags, ts})
 	const $c = $create("button", {
 		textContent: "c",
+		className: "link-change",
 		onclick: function() { promptChangeLink(this.closest("li")) },
 	})
 	const $d = $create("button", {
 		textContent: "d",
+		className: "link-delete",
 		onclick: function() { deleteLink(this.closest("li")) },
 	})
 	$li.append($d, $c, $icon, $a)
 	return $li
 }
 
+// TODO: Why is this function called updateLinkA?
 const updateLinkA = ($a, {title, url, tags, ts}) => {
 	$a.textContent = `${title || url} (${tags.join(",")})`
 	$a.href = url
@@ -124,7 +125,7 @@ const changeLink = async function($li) {
 
 const deleteLink = async function($li) {
 	if (!window.confirm("Are you sure you want to delete this link?"))
-		return false
+		return
 	const id = $li.id.slice("link-".length)
 	const link = bucket[id]
 	delete bucket[id]
@@ -132,10 +133,10 @@ const deleteLink = async function($li) {
 		await S.set({bucket})
 	} catch (e) {
 		bucket[id] = link
-		return false // TODO: error handling
+		return // TODO: error handling
 	}
+	$li.dispatchEvent(new Event("link-delete"))
 	$li.remove()
-	return true
 }
 
 onOrIfDomContentLoaded(main)
