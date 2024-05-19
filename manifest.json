@@ -13,7 +13,6 @@
 		"notifications" // report errors, notify successful saves
 	],
 	"permissions": [
-		"activeTab",
 		"storage",
 		"tabs",
 		"unlimitedStorage"
@@ -35,30 +34,19 @@
 		"browser_style": false
 	},
 	"commands": {
-		"_execute_browser_action": {
-			"description": "Save current tab (with popup)"
-		},
 		"_execute_sidebar_action": {
 			"description": "Toggle LinkBucket in the sidebar",
 			"suggested_key": { "default": "Alt+E" }
 		},
-		"save_curr": {
+		"saveTab": {
 			"description": "Save current tab",
-			"suggested_key": { "default": "Alt+S" }
-		},
-		"save_close_curr": {
-			"description": "Save and close current tab",
 			"suggested_key": { "default": "Alt+W" }
 		},
-		"save_all": {
+		"saveWin": {
 			"description": "Save all tabs in window",
-			"suggested_key": { "default": "Alt+Shift+S" }
-		},
-		"save_close_all": {
-			"description": "Save and close all tabs in window",
 			"suggested_key": { "default": "Alt+Shift+W" }
 		},
-		"go_to_bucket": {
+		"gotoBucket": {
 			"description": "Go to LinkBucket",
 			"suggested_key": { "default": "Alt+Shift+E" }
 		}

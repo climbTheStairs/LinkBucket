@@ -5,31 +5,27 @@
 	<meta charset="utf-8" />
 	<link rel="stylesheet" href="/lib/site/css/reset.css" />
 	<link rel="stylesheet" href="/css/main.css" />
+	<link rel="stylesheet" href="/css/popup.css" />
 </head>
 <body>
+	<template id="link-tr">
+		<tr class="link">
+			<td><input type="text" name="title" placeholder="title" /></td>
+			<td><input type="text" name="url"   placeholder="url" /></td>
+		</tr>
+	</template>
 	<form>
-		<table>
+		<table id="links">
 			<tr>
-				<td><label for="in-title">title</label></td>
-				<td><input type="text" name="title" id="in-title" /></td>
+				<th>title</th>
+				<th width="67%">url</th>
 			</tr>
+		</table>
+		<table id="rest">
 			<tr>
-				<td><label for="in-url">url</label></td>
-				<td><input type="text" name="url" id="in-url" /></td>
-			</tr>
-			<tr>
-				<td><label for="in-tags">tags</label></td>
-				<td><input type="text" name="tags" id="in-tags" autofocus="autofocus" /></td>
-			</tr>
-			<tr>
-				<td><label for="in-ts">timestamp</label></td>
-				<td><input type="text" name="ts" id="in-ts" /></td>
-			</tr>
-			<tr>
-				<td>
-					<label for"in-close">close tab? </label>
-					<input type="checkbox" name="close" id="in-close" checked="checked" />
-				</td>
+				<td><input type="text" name="ts"   placeholder="timestamp" /></td>
+				<td><input type="text" name="tags" placeholder="tags" autofocus="autofocus" /></td>
+				<td>close? <input type="checkbox" name="close" checked="checked" /></td>
 				<td><button type="submit">save</button></td>
 			</tr>
 		</table>

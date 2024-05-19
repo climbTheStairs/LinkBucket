@@ -1,38 +1,51 @@
-import {onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
+import {$, extendProto, onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
 import {
-	S, T, QUERY_TAB_CURR,
+	S, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
 	getConfig, saveTabsAsLinks,
 } from "/js/main.js"
+extendProto.Element()
 
-const [tabCurr] = await T.query(QUERY_TAB_CURR)
+const saveWin = new URL(location.href).searchParams.get("win") === "1"
+const tabs = await T.query(saveWin ? QUERY_WIN_CURR : QUERY_TAB_CURR)
+const [$form] = document.forms
 
 const main = async () => {
-	const config = await getConfig()
-	const [$form] = document.forms
-	$form.title.value = tabCurr.title
-	$form.url.value = tabCurr.url
+	$("#links").append(...tabs.map(tab2tr))
 	$form.ts.value = new Date().toISOString()
-	$form.close.checked = config.popup_close
-	$form.onsubmit = saveTab
-	// Sometimes autofocus doesn't work.
+	getConfig().then(config => {
+		$form.close.checked = config.popup_close
+	})
+	$form.onsubmit = saveTabs
+	// Sometimes autofocus doesn't work by itself.
 	setTimeout(() => $form.tags.focus(), 1)
 }
 
-const saveTab = async function(e) {
+const tab2tr = ({title, url, favIconUrl}) => {
+	const [$tr] = $("#link-tr").content.cloneNode(true).children
+	$tr.$(`[name="title"     ]`).value = title
+	$tr.$(`[name="url"       ]`).value = url
+	return $tr
+}
+
+const saveTabs = async (e) => {
 	e.preventDefault() // `return false` does not work with `async`
-	const tabEdited = {
-		title: this.title.value,
-		url: this.url.value,
-		favIconUrl: tabCurr.favIconUrl,
-	}
-	const tags = this.tags.value.split(",").map(x => x.trim())
-	const ts = this.ts.value.trim()
+	const tabsToSave = $form.title.map((_, i) => ({
+		title:      $form.title[i].value,
+		url:        $form.url[i].value,
+		favIconUrl: tabs[i].favIconUrl,
+	}))
+	const tags = $form.tags.value.split(",").map(x => x.trim())
+	const ts   = $form.ts.value.trim()
 	if (ts && Number.isNaN(+new Date(ts))) {
 		return // TODO: error handling
 	}
-	await saveTabsAsLinks([tabEdited], tags, ts)
-	if (this.close.checked)
-		await T.remove(tabCurr.id)
+	try {
+		await saveTabsAsLinks(tabsToSave, tags, ts)
+	} catch (_) {
+		return // TODO: error handling
+	}
+	if ($form.close.checked)
+		await T.remove(tabs.map(t => t.id))
 	window.close()
 }
 

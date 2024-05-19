@@ -1,6 +1,6 @@
 export {
 	C, R, S, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	getConfig, getTags, saveTabsAsLinks,
+	getConfig, saveTabsAsLinks,
 }
 
 const {
@@ -17,16 +17,6 @@ const QUERY_WIN_CURR = {currentWindow: true, pinned: false}
 const getConfig = async () => {
 	const {config} = await S.get({config: {}})
 	return {...DEFAULT_CONFIG, ...config}
-}
-
-const getTags = async () => {
-	const code = `window.prompt("Enter tags:")`
-	const [tags] = await T.executeScript({code})
-	if (typeof tags !== "string")
-		// either user aborted (tags is `null`)
-		// or current tab is privileged (tags is `undefined`)
-		return null
-	return tags.split(",").map(x => x.trim())
 }
 
 const saveTabsAsLinks = async (tabs, tags, ts = new Date().toISOString()) => {
