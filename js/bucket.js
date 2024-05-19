@@ -3,7 +3,7 @@ import {
 	extendProto,
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
-import {R, S} from "/js/main.js"
+import {S} from "/js/main.js"
 extendProto.Element()
 
 const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
@@ -13,7 +13,6 @@ const $form = $dialog.$("form")
 const $bucket = $("#bucket")
 
 const main = () => {
-	$("#config").onclick = () => R.openOptionsPage()
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
 	$bucket.append(...Object.values(bucket).map(link2html))
 }
