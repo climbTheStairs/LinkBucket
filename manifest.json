@@ -25,19 +25,11 @@
 	"browser_action": {
 		"default_popup": "/html/popup.html"
 	},
-	"sidebar_action": {
-		"default_panel": "/html/bucket.html",
-		"browser_style": false
-	},
 	"options_ui": {
 		"page": "/html/config.html",
 		"browser_style": false
 	},
 	"commands": {
-		"_execute_sidebar_action": {
-			"description": "Toggle LinkBucket in the sidebar",
-			"suggested_key": { "default": "Alt+E" }
-		},
 		"saveTab": {
 			"description": "Save current tab",
 			"suggested_key": { "default": "Alt+W" }
@@ -48,7 +40,7 @@
 		},
 		"gotoBucket": {
 			"description": "Go to LinkBucket",
-			"suggested_key": { "default": "Alt+Shift+E" }
+			"suggested_key": { "default": "Alt+E" }
 		}
 	}
 }
