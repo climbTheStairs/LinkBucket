@@ -36,8 +36,17 @@
 			</table>
 		</form>
 	</dialog>
+
 	<input type="text" id="search" />
+	<form id="ctrl">
+		<!-- TODO: these don't work yet -->
+		<button type="button" id="edit-links">Edit</button>
+		<input type="file" id="import-links" class="hidden" accept=".tsv,.txt,text/plain,text/tab-separated-values" />
+		<label for="import-links" class="button" tabindex="0" title="Imported links will be added to bucket.  No data will be overwritten.">Import links</label>
+		<button type="button" id="export-links">Export links</button>
+	</form>
 	<ul id="bucket"></ul>
+
 	<script src="/lib/site/js/stairz.js" type="module"></script>
 	<script src="/js/main.js" type="module"></script>
 	<script src="/js/bucket.js" type="module"></script>
