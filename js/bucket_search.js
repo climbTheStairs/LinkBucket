@@ -22,6 +22,7 @@ const filt = (q) => {
 	q = q.toLowerCase().split(" ").filter(x => x)
 	for (const $li of $bucket.children) {
 		const id = $li.id.slice("link-".length)
+		// TODO: `bucket` undefined
 		const hasTag = [].includes.bind(bucket[id].tags)
 		$li.classList.toggle("hidden", !evalRpn(q, hasTag))
 	}
