@@ -3,13 +3,13 @@
 }
 
 body {
+	font-family: sans-serif;
 	padding: 10px;
 }
 
 button, .button {
 	background: #DDD;
 	border: var(--border);
-	font-size: small;
 	padding: 1px 4px;
 	user-select: none;
 }
