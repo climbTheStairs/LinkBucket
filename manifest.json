@@ -18,7 +18,7 @@
 		"unlimitedStorage"
 	],
 	"background": {
-		"scripts": ["/js/main.js", "/js/bg.js"],
+		"scripts": ["/js/bg.js"],
 		"persistent": false,
 		"type": "module"
 	},

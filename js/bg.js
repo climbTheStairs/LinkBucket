@@ -1,30 +1,36 @@
-import {
-	C, R, T, QUERY_TAB_CURR, QUERY_WIN_CURR,
-	saveTabsAsLinks,
-} from "/js/main.js"
-
-const {browserAction: BA} = browser
-
 const saveTab = async () => {
-	BA.setPopup({popup: "/html/popup.html"})
-	await BA.openPopup()
+	browser.browserAction.setPopup({popup: "/html/popup.html"})
+	await browser.browserAction.openPopup()
 }
 
 const saveWin = async () => {
-	BA.setPopup({popup: "/html/popup.html?win=1"})
-	await BA.openPopup()
+	browser.browserAction.setPopup({popup: "/html/popup.html?win=1"})
+	await browser.browserAction.openPopup()
 }
 
 const gotoBucket = async () => {
-	const url = R.getURL("/html/bucket.html")
-	const [tabBucket] = await T.query({currentWindow: true, url})
+	const url = browser.runtime.getURL("/html/bucket.html")
+	const [tabBucket] = await browser.tabs.query({currentWindow: true, url})
 	if (tabBucket)
-		await T.update(tabBucket.id, {active: true})
+		await browser.tabs.update(tabBucket.id, {active: true})
 	else
-		await T.create({url: "/html/bucket.html"})
+		await browser.tabs.create({url: "/html/bucket.html"})
+}
+
+const DEFAULT_CONFIG = {popup_close: true}
+const config = async (sendResp) => {
+	const {config} = await browser.storage.local.get({config: {}})
+	sendResp({...DEFAULT_CONFIG, ...config})
 }
 
 const cmds = {saveTab, saveWin, gotoBucket}
-
-C.onCommand.addListener(cmd => console.debug("recv cmd: "+cmd))
-C.onCommand.addListener(cmd => cmds[cmd]().catch(console.error))
+const msgs = {config}
+browser.commands.onCommand.addListener(cmd => {
+	console.debug("recv cmd: "+cmd)
+	cmds[cmd]().catch(console.error)
+})
+browser.runtime.onMessage.addListener((msg, _, sendResp) => {
+	console.debug("recv msg: "+msg)
+	msgs[msg](sendResp).catch(console.error)
+	return true
+})

@@ -1,5 +1,4 @@
 import {onOrIfDomContentLoaded} from "/lib/site/js/stairz.js"
-import {S, getConfig} from "/js/main.js"
 
 const [$form] = document.forms
 
@@ -9,7 +8,7 @@ const main = () => {
 }
 
 const configLoad = async () => {
-	const config = await getConfig()
+	const config = await browser.runtime.sendMessage("config")
 	;[...$form].filter($in => $in.name)
 		.forEach($in => $in.checked = config[$in.name])
 }
@@ -19,7 +18,7 @@ const configSave = async (e) => {
 	const config = Object.fromEntries([...$form]
 		.filter($in => $in.name)
 		.map($in => [$in.name, $in.checked]))
-	await S.set({config})
+	await browser.storage.local.set({config})
 }
 
 onOrIfDomContentLoaded(main)

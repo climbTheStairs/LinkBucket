@@ -3,11 +3,12 @@ import {
 	extendProto,
 	onOrIfDomContentLoaded,
 } from "/lib/site/js/stairz.js"
-import {S} from "/js/main.js"
 extendProto.Element()
 
-const {bucket, favicons} = await S.get({bucket: {}, favicons: {}})
-
+const {bucket, favicons} = await browser.storage.local.get({
+	bucket: {},
+	favicons: {},
+})
 const $dialog = $("dialog")
 const $form = $dialog.$("form")
 const $bucket = $("#bucket")
@@ -80,7 +81,7 @@ const linkChangeExec = async function($li) {
 	// This is different from `linkDelete()`.
 	// TODO: Do this a different way such that consistency
 	try {
-		await S.set({bucket})
+		await browser.storage.local.set({bucket})
 	} catch (e) {
 		return // TODO: error handling
 	}
@@ -93,7 +94,7 @@ const linkDelete = async ($li) => {
 	const link = bucket[id]
 	delete bucket[id]
 	try {
-		await S.set({bucket})
+		await browser.storage.local.set({bucket})
 	} catch (e) {
 		bucket[id] = link
 		return // TODO: error handling
