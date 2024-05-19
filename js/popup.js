@@ -29,7 +29,7 @@ const tab2tr = ({title, url, favIconUrl}) => {
 
 const saveTabs = async (e) => {
 	e.preventDefault() // `return false` does not work with `async`
-	const tabsToSave = $form.title.map((_, i) => ({
+	const tabsToSave = [...$form.title].map((_, i) => ({
 		title:      $form.title[i].value,
 		url:        $form.url[i].value,
 		favIconUrl: tabs[i].favIconUrl,
