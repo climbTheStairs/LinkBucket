@@ -7,12 +7,21 @@
 	<link rel="stylesheet" href="/css/main.css" />
 </head>
 <body>
-	<form>
+	<form id="config">
+		<!-- ids use `_` instead of `-` for easier saving to JSON -->
 		<input type="checkbox" name="popup_close" id="popup_close" />
-		<label for="popup_close">Close by default tabs saved with popup:</label>
+		<label for="popup_close">Close saved tabs by default</label>
 		<br />
 		<button type="submit">Save</button>
 	</form>
+	<form id="ctrl">
+		<!-- TODO: these don't work yet -->
+		<input type="file" id="config-import" class="hidden" accept="text/plain,application/json" />
+		<label for="config-import" class="button" tabindex="0">Import config</label>
+		<button type="button" id="config-export">Export config</button>
+		<button type="button" id="config-restore">Restore default</button>
+	</form>
+
 	<script src="/lib/site/js/stairz.js" type="module"></script>
 	<script src="/js/main.js" type="module"></script>
 	<script src="/js/config.js" type="module"></script>
