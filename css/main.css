@@ -1,10 +1,14 @@
+:root {
+	--border: 1px solid #AAA;
+}
+
 body {
 	padding: 10px;
 }
 
 button, .button {
 	background: #DDD;
-	border: 1px solid #AAA;
+	border: var(--border);
 	font-size: small;
 	padding: 1px 4px;
 	user-select: none;
@@ -17,8 +21,15 @@ button:active, .button:active {
 }
 
 textarea, input[type="text"] {
-	border: 1px solid #AAA;
+	border: var(--border);
 	padding: 1px 4px;
+}
+
+dialog {
+	background: white;
+	border: var(--border);
+	margin: auto;
+	padding: 10px;
 }
 
 .hidden {
