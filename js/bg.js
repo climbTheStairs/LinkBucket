@@ -10,9 +10,9 @@ const saveWin = async () => {
 
 const gotoBucket = async () => {
 	const url = browser.runtime.getURL("/html/bucket.html")
-	const [tabBucket] = await browser.tabs.query({currentWindow: true, url})
-	if (tabBucket)
-		await browser.tabs.update(tabBucket.id, {active: true})
+	const [tab] = await browser.tabs.query({currentWindow: true, url})
+	if (tab)
+		await browser.tabs.update(tab.id, {active: true})
 	else
 		await browser.tabs.create({url: "/html/bucket.html"})
 }
