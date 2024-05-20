@@ -11,6 +11,6 @@ th {
 	text-align: left;
 }
 
-textarea, input[type="text"] {
+table input[type="text"] {
 	width: 100%;
 }
