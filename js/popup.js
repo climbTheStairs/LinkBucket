@@ -57,12 +57,12 @@ const saveTabs = async (e) => {
 const saveFavicon = (favicons, url, favicon) => {
 	try {
 		const {host} = new URL(url)
-		if (host && favicon)
-			favicons[host] = favicon
 	} catch (_) {
-		// Only possible error is if `url` is invalid;
-		// in that case, do absolutely nothing.
+		// Only possible error is if `url` is invalid.
+		return
 	}
+	if (host && favicon)
+		favicons[host] = favicon
 }
 
 onOrIfDomContentLoaded(main)
