@@ -1,5 +1,4 @@
 #!/bin/sh
-# shellcheck disable=SC2015,SC2016,SC2155
 alias p='printf %s\\n'
 fail() { p "$0: $1" >&2; exit 1; }
 debug() { [ -n "$DEBUG" ] && p "debug: $1" >&2; }
