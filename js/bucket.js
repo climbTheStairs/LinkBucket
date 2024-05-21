@@ -15,13 +15,11 @@ const $bucket = $("#bucket")
 
 const main = () => {
 	$form.$(`button[type="button"]`).onclick = () => $dialog.close()
-	$bucket.append(...Object.values(bucket).map(link2html))
+	$bucket.append(...Object.entries(bucket).map(link2html))
 }
 
-const link2html = ({id, title, url, tags, ts}) => {
-	const $li = $create("li", {
-		id: "link-"+id,
-	})
+const link2html = ([id, {title, url, tags, ts}]) => {
+	const $li = $create("li", {id: "link-"+id})
 	const $icon = $create("img", {
 		className: "favicon",
 		src: getFavicon(url), // TODO: Default favicon

@@ -40,8 +40,7 @@ const saveTabs = async (e) => {
 		const title = ($form.title?.[i] ?? $form.title).value
 		const url   = ($form.url?.[i]   ?? $form.url  ).value
 		saveFavicon(favicons, url, favIconUrl)
-		// TODO: why not `maxId++`?
-		bucket[++maxId] = {id: maxId, title, url, tags, ts}
+		bucket[maxId++] = {title, url, tags, ts}
 	})
 	try {
 		await browser.storage.local.set({bucket, favicons, maxId})
