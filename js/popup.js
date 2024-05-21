@@ -8,6 +8,8 @@ const saveWin = +new URL(window.location).searchParams.get("win")
 const tabsCurr = await browser.tabs.query(saveWin ? QUERY_WIN : QUERY_TAB)
 
 const main = () => {
+	if (tabsCurr.length === 0)
+		return; // TODO: error
 	$("#links").append(...tabsCurr.map(tab2tr))
 	$form.ts.value = new Date().toISOString()
 	browser.runtime.sendMessage("config").then(config =>
