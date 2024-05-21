@@ -4,11 +4,11 @@ extendProto.Element()
 const [$form] = document.forms
 const QUERY_TAB = {currentWindow: true, active: true}
 const QUERY_WIN = {currentWindow: true, pinned: false}
-const SAVE_WIN = +new URL(window.location).searchParams.get("win")
-const TABS_CURR = await browser.tabs.query(SAVE_WIN ? QUERY_WIN : QUERY_TAB)
+const saveWin = +new URL(window.location).searchParams.get("win")
+const tabsCurr = await browser.tabs.query(saveWin ? QUERY_WIN : QUERY_TAB)
 
 const main = () => {
-	$("#links").append(...TABS_CURR.map(tab2tr))
+	$("#links").append(...tabsCurr.map(tab2tr))
 	$form.ts.value = new Date().toISOString()
 	browser.runtime.sendMessage("config").then(config =>
 		$form.close.checked = config.popup_close)
@@ -36,7 +36,7 @@ const saveTabs = async (e) => {
 	if (ts && Number.isNaN(+new Date(ts))) {
 		return // TODO: error handling
 	}
-	TABS_CURR.forEach(({favIconUrl}, i) => {
+	tabsCurr.forEach(({favIconUrl}, i) => {
 		const title = ($form.title?.[i] ?? $form.title).value
 		const url   = ($form.url?.[i]   ?? $form.url  ).value
 		saveFavicon(favicons, url, favIconUrl)
@@ -49,7 +49,7 @@ const saveTabs = async (e) => {
 		return // TODO: error handling
 	}
 	if ($form.close.checked)
-		await browser.tabs.remove(TABS_CURR.map(t => t.id))
+		await browser.tabs.remove(tabsCurr.map(t => t.id))
 	window.close()
 }
 
