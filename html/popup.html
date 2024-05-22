@@ -3,7 +3,7 @@
 <head>
 	<title>LinkBucket</title>
 	<meta charset="utf-8" />
-	<link rel="stylesheet" href="/lib/site/css/reset.css" />
+	<!-- link rel="stylesheet" href="/lib/site/css/reset.css" / -->
 	<link rel="stylesheet" href="/css/main.css" />
 	<link rel="stylesheet" href="/css/popup.css" />
 </head>
@@ -15,20 +15,18 @@
 		</tr>
 	</template>
 	<form>
-		<table id="links">
+		<fieldset><table id="links">
 			<tr>
 				<th>title</th>
 				<th width="67%">url</th>
 			</tr>
-		</table>
-		<table id="rest">
-			<tr>
-				<td><input type="text" name="ts"   placeholder="timestamp" /></td>
-				<td><input type="text" name="tags" placeholder="tags" autofocus="autofocus" /></td>
-				<td>close? <input type="checkbox" name="close" checked="checked" /></td>
-				<td><button type="submit">save</button></td>
-			</tr>
-		</table>
+		</table></fieldset>
+		<fieldset>
+				<input type="text" name="ts"   placeholder="timestamp" />
+				<input type="text" name="tags" placeholder="tags" autofocus="autofocus" />
+				close? <input type="checkbox" name="close" checked="checked" />
+				<button type="submit">save</button>
+		</fieldset>
 	</form>
 	<script src="/lib/site/js/stairz.js" type="module"></script>
 	<script src="/js/popup.js" type="module"></script>

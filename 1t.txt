@@ -1,0 +1,21 @@
+https://www.google.com/search?q=collapse+horizontal+margins | collapse horizontal margins - Google Search
+https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_box_model/Mastering_margin_collapsing | Mastering margin collapsing - CSS: Cascading Style Sheets | MDN
+https://css-tricks.com/lobotomized-owls/ | Lobotomized Owls | CSS-Tricks - CSS-Tricks
+https://stackoverflow.com/questions/74509829/how-to-debug-javascript-modules-using-the-browser-console | How to debug JavaScript modules using the browser console? - Stack Overflow
+https://www.joshwcomeau.com/css/rules-of-margin-collapse/ | The Rules of Margin Collapse
+https://developer.mozilla.org/en-US/docs/Web/CSS/appearance | appearance - CSS: Cascading Style Sheets | MDN
+https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Working_with_files | Work with files - Mozilla | MDN
+https://www.google.com/search?client=firefox-b-d&q=webextension+save+file | webextension save file - Google Search
+moz-extension://a5d0bae0-d24b-4233-ac1d-8df678c45056/placeholder.html | Placeholder
+https://www.youtube.com/watch?v=iX_QyjdctsQ | 5+ Must Know HTML Tags That Almost Nobody Knows - YouTube
+https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation | Client-side form validation - Learn web development | MDN
+https://developer.mozilla.org/en-US/docs/Web/API/Popover_API | Popover API - Web APIs | MDN
+https://superuser.com/questions/1617161/how-to-enable-local-file-links-in-firefox-on-windows | browser - How to enable local file links in Firefox (on Windows) - Super User
+http://ps-2.kev009.com/jasper/aix/mozilla.html | Notes on the Mozilla Web Browser
+http://kb.mozillazine.org/Links_to_local_pages_do_not_work#Firefox_1.5.2C_Mozilla_1.8.2C_and_newer | Links to local pages do not work - MozillaZine Knowledge Base
+https://bugzilla.mozilla.org/show_bug.cgi?id=84128 | 84128 - Need user-visible message when CheckLoadURI fails (eg, for links to file: urls)
+https://twiki.org/cgi-bin/view/Support/LinkToLocalFileDoesNothing | LinkToLocalFileDoesNothing < Support < TWiki
+http://forums.mozillazine.org/viewtopic.php?t=1265315 | "Security error: Content may not load/link" -- Solution ??? - mozillaZine Forums
+https://superuser.com/questions/1513156/how-do-i-instruct-firefox-to-allow-me-to-open-file-urls-on-a-localhost-serve | windows - How do I instruct Firefox to allow me to open file:/// URLs on a localhost-server http:// webpage? - Super User
+https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Working_with_files#process_files_in_a_local_app | Work with files - Mozilla | MDN
+https://developer.mozilla.org/en-US/docs/Web/API/Popover_API | popover API

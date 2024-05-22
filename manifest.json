@@ -6,17 +6,7 @@
 	"description": "Store, close, tag, and organize tabs with LinkBucket.",
 	"author": "Wren",
 	"homepage_url": "https://github.com/climbTheStairs/LinkBucket",
-	"optional_permissions": [
-		//"bookmarks", // save to bookmarks instead of LinkBucket (maybe not)
-		"clipboardWrite", // export data to clipboard
-		//"contextMenus",
-		"notifications" // report errors, notify successful saves
-	],
-	"permissions": [
-		"storage",
-		"tabs",
-		"unlimitedStorage"
-	],
+	"permissions": ["storage", "tabs", "unlimitedStorage"],
 	"background": {
 		"scripts": ["/js/bg.js"],
 		"persistent": false,

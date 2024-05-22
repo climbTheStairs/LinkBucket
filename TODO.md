@@ -1,48 +1,66 @@
-- run `find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} +`
+## run this
+```sh
+find . -name .git -type d -prune -o -type f -exec grep -F 'T'ODO {} +
+```
+
+## user features
 - ~~`popup.html`~~
-- ~~modules~~
-- ~~dependency management~~
-- ~~Git~~
-- error handling
-- log errors
-- documentation (`README.md`, doc comments)
 - ~~`config.html`~~
 - ~~changing and deleting of links~~
-- don't store duplicate favicons (WIP)
-- special handling for non-`http` links
-- import and export all data
-- ~~filtering by tag~~
-- update `bucket.html` on storage change (optional)
-- chromium (Manifest V3) compatibility
-- sync to server
-- front-end features
-	- OneTab-like behav
+- update `bucket.html` on storage change
+- import/export
+- tagging:
 	- tag query aliases/"metatags"
 	- hierarchical subtags
+- `bucket.html` organization:
+	- ~~filtering by tag~~
 	- tabs
 	- pinned tag queries
-	- text search
+	- text search (?)
 	- list all tabs?
-- `optional_permissions`
-- TypeScript (?)
-- icon
-- optional audio notifications (?)
-- sort links by
-- browser search suggestions (?)
+	- sort links by
 - keyboard controls (WIP)
 	- select multiple (visual mode?)
 	- delete without confirmation
-- mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`) (?)
-- tests (?)
+- mouse chording (see `MouseEvent.button` and `MouseEvent.buttons`)
+- sync to server
+- UI extensibility via CSS & JS
+- browser search suggestions (?)
+- save to bookmarks instead (?)
+- icon
+- OneTab-like behav
+	- <https://github.com/cnwangjie/better-onetab>
+	- <https://github.com/josh-berry/tab-stash>
+- find better name
+- see disk usage
+
+## implementation
+- ~~modules~~
+- ~~dependency management~~
+- ~~Git~~
+- ~~don't store duplicate favicons~~
+- error handling & logging
+- documentation (`README.md`, doc comments)
+- chromium, mv3 compatibility
+- TypeScript
+- tests
+- examine page load speed
+- clean unused favicons
+
+## edge cases
+- find out if `confirm()` is bad
+	because it can be disabled, breaking functionality
+- special handling for non-`http` links
+	- for each kind of special link, record:
+		- url
+		- `tabs.Tab` obj has `favIconUrl`
+		- `new URL` properties `host`, `hostname`, `origin`
+		- openable from lb
+		- match pattern
+		- OneTab behavior
 - need for locks (?)
-- pages load slowly
-- find out if `confirm()` is bad because it can be disabled, breaking functionality?
-- for each kind of special link, record:
-	- url
-	- `tabs.Tab` obj has `favIconUrl`
-	- `new URL` properties `host`, `hostname`, `origin`
-	- openable from lb
-	- match pattern
-	- OneTab behavior
-- UI extensibility via JS
-- find better name (?)
+
+## disorg ex
+- sep config
+- rm config
+
