@@ -5,11 +5,12 @@ const $bucket = $("#bucket")
 let $sel
 
 const main = () => {
-	document.onkeydown = keyboardNav
-	new MutationObserver(selNextIfDeleted).observe($bucket, {childList: true})
+	document.onkeydown = kbdNav
+	new MutationObserver(selNextIfDeleted)
+		.observe($bucket, {childList: true})
 }
 
-const keyboardNav = async (e) => {
+const kbdNav = (e) => {
 	if (e.key === "Escape")
 		return document.activeElement.blur()
 	if (![document.body, null].includes(document.activeElement))

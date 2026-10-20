@@ -12,11 +12,7 @@
 		//"contextMenus",
 		"notifications" // report errors, notify successful saves
 	],
-	"permissions": [
-		"storage",
-		"tabs",
-		"unlimitedStorage"
-	],
+	"permissions": ["storage", "tabs", "unlimitedStorage"],
 	"background": {
 		"scripts": ["/js/bg.js"],
 		"persistent": false,
